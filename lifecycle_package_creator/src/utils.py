@@ -11,7 +11,8 @@ def to_header(msg_type):
     elems = msg_type.split('::')
     elems[-1] = to_snake_case(elems[-1])
     elems[-1] += '.hpp'
-    return "/".join(elems)
+    header_str = "/".join(elems)
+    return f'#include "{header_str}"'
 
 
 def format_subscribers(subs: dict):
@@ -23,8 +24,8 @@ def format_subscribers(subs: dict):
 
 
 def format_publishers(subs: dict):
-    sub_list = []
+    pub_list = []
     for name, msg_type in subs.items():
-        sub_list.append(
+        pub_list.append(
             f"rclcpp_lifecycle::LifecyclePublisher<{msg_type}>::SharedPtr {name}_pub_;")
-    return '\n'.join(sub_list)
+    return '\n'.join(pub_list)

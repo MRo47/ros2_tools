@@ -4,8 +4,22 @@
 #include <memory>
 
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
-#include "sensor_msgs/msg/image.hpp"
-#include "sensor_msgs/msg/region_of_interest.hpp"
+{%- set merged_values = [] %}
+{%- for key, value in publishers.items() -%}
+    {% if value not in merged_values -%}
+        {% set _ = merged_values.append(value) %}
+    {%- endif %}
+{%- endfor %}
+
+{%- for key, value in subscribers.items() -%}
+    {% if value not in merged_values -%}
+        {% set _ = merged_values.append(value) %}
+    {%- endif %}
+{%- endfor %}
+
+{%- for value in merged_values %}
+{{ value | header }}
+{%- endfor %}
 
 namespace {{ namespace }}
 {
