@@ -37,9 +37,12 @@ private:
 
   void reset() noexcept;
 
-  {{ subscribers | format_subscribers | indent(2) }}
-
-  {{ publishers | format_publishers | indent(2) }}
+  {% for name, msg_type in subscribers.items() -%}
+  rclcpp::Subscription<{{msg_type}}>::SharedPtr {{name}}_sub_;
+  {% endfor %}
+  {% for name, msg_type in publishers.items() -%}
+  rclcpp_lifecycle::LifecyclePublisher<{{msg_type}}>::SharedPtr {{name}}_pub_;
+  {% endfor %}
 };
 }  // namespace {{ namespace }}
 

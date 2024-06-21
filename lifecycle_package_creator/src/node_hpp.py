@@ -9,8 +9,6 @@ def create_hpp(template_dir, template_name, node_name, namespace, publishers, su
 
     env.filters['snake_case'] = to_snake_case
     env.filters['upper_case'] = to_upper_case
-    env.filters['format_subscribers'] = format_subscribers
-    env.filters['format_publishers'] = format_publishers
     env.filters['header'] = to_header
     template = env.get_template(template_name)
 
