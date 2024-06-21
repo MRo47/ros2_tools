@@ -1,0 +1,32 @@
+#ifndef {{ namespace | upper_case }}__{{ node_name | upper_case}}_HPP_
+#define {{ namespace | upper_case }}__{{ node_name | upper_case}}_HPP_
+
+#include <memory>
+
+#include "rclcpp_lifecycle/lifecycle_node.hpp"
+#include "sensor_msgs/msg/image.hpp"
+#include "sensor_msgs/msg/region_of_interest.hpp"
+
+namespace {{ namespace }}
+{
+class {{ node_name }} : public rclcpp_lifecycle::LifecycleNode
+{
+public:
+  explicit {{ node_name }}(const rclcpp::NodeOptions & options);
+
+private:
+  CallbackReturn on_configure(const rclcpp_lifecycle::State &) override;
+  CallbackReturn on_activate(const rclcpp_lifecycle::State & state) override;
+  CallbackReturn on_deactivate(const rclcpp_lifecycle::State & state) override;
+  CallbackReturn on_cleanup(const rclcpp_lifecycle::State &) override;
+  CallbackReturn on_shutdown(const rclcpp_lifecycle::State &) override;
+
+  void reset() noexcept;
+
+  {{ subscribers | format_subscribers | indent(2) }}
+
+  {{ publishers | format_publishers | indent(2) }}
+};
+}  // namespace {{ namespace }}
+
+#endif  // {{ namespace | upper_case }}__{{ node_name | upper_case}}_HPP_
