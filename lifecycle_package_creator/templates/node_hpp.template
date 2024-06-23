@@ -4,22 +4,21 @@
 #include <memory>
 
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
-{%- set merged_values = [] %}
-{%- for key, value in publishers.items() -%}
+
+{% set merged_values = [] %}
+{% for key, value in publishers.items() -%}
     {% if value not in merged_values -%}
         {% set _ = merged_values.append(value) %}
     {%- endif %}
-{%- endfor %}
-
-{%- for key, value in subscribers.items() -%}
+{% endfor %}
+{% for key, value in subscribers.items() -%}
     {% if value not in merged_values -%}
         {% set _ = merged_values.append(value) %}
     {%- endif %}
-{%- endfor %}
-
-{%- for value in merged_values %}
+{% endfor %}
+{% for value in merged_values %}
 {{ value | header }}
-{%- endfor %}
+{% endfor %}
 
 namespace {{ namespace }}
 {
@@ -38,11 +37,17 @@ private:
   void reset() noexcept;
 
   {% for name, msg_type in subscribers.items() -%}
+  void {{ name }}_callback(const {{ msg_type }} & {{ name }}_msg);
+  {% endfor %}
+
+  {% for name, msg_type in subscribers.items() -%}
   rclcpp::Subscription<{{msg_type}}>::SharedPtr {{name}}_sub_;
   {% endfor %}
+
   {% for name, msg_type in publishers.items() -%}
   rclcpp_lifecycle::LifecyclePublisher<{{msg_type}}>::SharedPtr {{name}}_pub_;
   {% endfor %}
+
 };
 }  // namespace {{ namespace }}
 

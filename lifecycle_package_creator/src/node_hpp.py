@@ -4,8 +4,7 @@ from utils import *
 
 
 def create_hpp(template_dir, template_name, node_name, namespace, publishers, subscribers):
-    env = Environment(loader=FileSystemLoader(template_dir),
-                      trim_blocks=False, lstrip_blocks=False)
+    env = Environment(loader=FileSystemLoader(template_dir), trim_blocks=True)
 
     env.filters['snake_case'] = to_snake_case
     env.filters['upper_case'] = to_upper_case
