@@ -1,3 +1,6 @@
+import re
+
+
 def to_snake_case(value):
     return ''.join(['_' + c.lower() if c.isupper() else c for c in value]).lstrip('_')
 
@@ -13,6 +16,16 @@ def to_header(msg_type):
     elems[-1] += '.hpp'
     header_str = "/".join(elems)
     return f'#include "{header_str}"'
+
+
+def to_human_readable(s):
+    # Replace underscores and hyphens with spaces
+    s = s.replace('_', ' ').replace('-', ' ')
+    # Split camel case and join with spaces
+    s = re.sub('([a-z])([A-Z])', r'\1 \2', s)
+    # Capitalize each word
+    s = s.title()
+    return s
 
 
 def get_package_name(msg_type):
