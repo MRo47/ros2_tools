@@ -5,7 +5,7 @@ from utils import *
 
 def generate_package_xml(template_dir: str, package_xml_template: str,
                          node_name: str, publishers: dict, subscribers: dict, author_name: str,
-                         author_email: str, license_name: str):
+                         author_email: str, license_name: str, description: str):
     env = Environment(loader=FileSystemLoader(template_dir), trim_blocks=True)
 
     env.filters['snake_case'] = to_snake_case
@@ -15,7 +15,8 @@ def generate_package_xml(template_dir: str, package_xml_template: str,
     package_xml_template = env.get_template(package_xml_template)
     package_xml_file = package_xml_template.render(
         node_name=node_name, subscribers=subscribers, publishers=publishers,
-        author_name=author_name, author_email=author_email, license_name=license_name)
+        author_name=author_name, author_email=author_email, license_name=license_name,
+        description=description)
 
     print(package_xml_file)
 
@@ -37,4 +38,4 @@ if __name__ == "__main__":
     generate_package_xml(template_dir, package_xml_template,
                          "CodeMaker", publishers, subscribers, "Myron Rodrigues",
                          "rodriguesmyron47@gmail.com",
-                         "Apache-2.0")
+                         "Apache-2.0", "some description")

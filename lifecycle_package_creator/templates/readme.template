@@ -2,6 +2,8 @@
 
 ## {{ node_name | human_readable }}
 
+{{ description }}
+
 ### Subscribed topics
 
 {% for name, msg_type in subscribers.items() -%}

@@ -4,7 +4,7 @@ from utils import *
 
 
 def generate_readme(template_dir: str, readme_template: str, node_name: str,
-                    namespace: str, publishers: dict, subscribers: dict):
+                    namespace: str, publishers: dict, subscribers: dict, description: str):
     env = Environment(loader=FileSystemLoader(template_dir), trim_blocks=True)
 
     env.filters['snake_case'] = to_snake_case
@@ -14,7 +14,8 @@ def generate_readme(template_dir: str, readme_template: str, node_name: str,
 
     readme_template = env.get_template(readme_template)
     readme_file = readme_template.render(namespace=namespace,
-                                         node_name=node_name, subscribers=subscribers, publishers=publishers)
+                                         node_name=node_name, publishers=publishers,
+                                         subscribers=subscribers, description=description)
 
     print(readme_file)
 
@@ -34,4 +35,4 @@ if __name__ == "__main__":
     }
 
     generate_readme(template_dir, readme_template,
-                    "CodeMaker", "codega", publishers, subscribers)
+                    "CodeMaker", "codega", publishers, subscribers, "some description")

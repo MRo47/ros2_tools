@@ -3,7 +3,7 @@
 <package format="3">
   <name>{{ node_name | snake_case}}</name>
   <version>0.1.0</version>
-  <description>TODO</description>
+  <description>{{ description }}</description>
   <maintainer email="{{ author_email }}">{{ author_name }}</maintainer>
   <license>{{ license_name }}</license>
 
