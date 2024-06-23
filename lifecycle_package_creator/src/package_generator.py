@@ -44,8 +44,11 @@ def create_dir(dir_path):
             f"An error occurred while creating the directory: {e}")
 
 
-def write_to_file(file_path, formatted_string):
+def create_and_write_to_file(file_path, formatted_string):
     path = Path(file_path)
+
+    if not path.parent.exists():
+        path.parent.mkdir(parents=True)
 
     # Open the file in write mode and write the formatted string to it
     with path.open('w') as f:
@@ -71,36 +74,36 @@ def generate_package(config_file: Path, template_dir: Path, target_dir: Path):
         (to_snake_case(config["node_name"])+"_node.cpp")
 
     # generate file and add data
-    write_to_file(cmakelists,
-                  generate_cmakelists(template_dir, "cmakelists.template",
-                                      config["node_name"], config["namespace"],
-                                      config["publishers"], config["subscribers"]))
+    create_and_write_to_file(cmakelists,
+                             generate_cmakelists(template_dir, "cmakelists.template",
+                                                 config["node_name"], config["namespace"],
+                                                 config["publishers"], config["subscribers"]))
 
-    write_to_file(readme,
-                  generate_readme(template_dir, "readme.template",
-                                  config["node_name"], config["namespace"],
-                                  config["publishers"], config["subscribers"],
-                                  config["description"]))
+    create_and_write_to_file(readme,
+                             generate_readme(template_dir, "readme.template",
+                                             config["node_name"], config["namespace"],
+                                             config["publishers"], config["subscribers"],
+                                             config["description"]))
 
-    write_to_file(package_xml,
-                  generate_package_xml(template_dir, "package_xml.template",
-                                       config["node_name"], config["publishers"],
-                                       config["subscribers"], config["author"],
-                                       config["email"], config["license"],
-                                       config["description"]))
+    create_and_write_to_file(package_xml,
+                             generate_package_xml(template_dir, "package_xml.template",
+                                                  config["node_name"], config["publishers"],
+                                                  config["subscribers"], config["author"],
+                                                  config["email"], config["license"],
+                                                  config["description"]))
 
-    write_to_file(launch,
-                  generate_launch(template_dir, "node_launch.template",
-                                  config["node_name"], config["namespace"]))
+    create_and_write_to_file(launch,
+                             generate_launch(template_dir, "node_launch.template",
+                                             config["node_name"], config["namespace"]))
 
     hpp_text, cpp_text, main_text = generate_source(
         template_dir, "node_hpp.template", "node_cpp.template", "node_main.template",
         config["node_name"], config["namespace"], config["publishers"], config["subscribers"]
     )
 
-    write_to_file(node_hpp, hpp_text)
-    write_to_file(node_cpp, cpp_text)
-    write_to_file(node_main, main_text)
+    create_and_write_to_file(node_hpp, hpp_text)
+    create_and_write_to_file(node_cpp, cpp_text)
+    create_and_write_to_file(node_main, main_text)
 
 
 def main():
