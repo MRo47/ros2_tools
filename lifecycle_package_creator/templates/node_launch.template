@@ -1,0 +1,42 @@
+from launch import LaunchDescription
+from launch.actions import EmitEvent
+from launch.events.matchers import matches_action
+from launch_ros.actions import LifecycleNode
+from launch_ros.events.lifecycle import ChangeState
+import lifecycle_msgs.msg
+
+
+def generate_launch_description():
+    {{ node_name | snake_case}} = LifecycleNode(
+        name="{{ node_name | snake_case}}",
+        namespace="{{ namespace }}",
+        package="{{ namespace }}",
+        executable="{{ node_name | snake_case}}",
+        output="screen",
+        remappings=[
+            ("/internal_topic", "/external_topic")
+        ],
+        parameters=[{
+            "name": "value",
+        }]
+    )
+
+    configure_event = EmitEvent(
+        event=ChangeState(
+            lifecycle_node_matcher=matches_action({{ node_name | snake_case}}),
+            transition_id=lifecycle_msgs.msg.Transition.TRANSITION_CONFIGURE,
+        )
+    )
+
+    activate_event = EmitEvent(
+        event=ChangeState(
+            lifecycle_node_matcher=matches_action({{ node_name | snake_case}}),
+            transition_id=lifecycle_msgs.msg.Transition.TRANSITION_ACTIVATE,
+        )
+    )
+
+    return LaunchDescription([
+        {{ node_name | snake_case}},
+        configure_event,
+        activate_event
+    ])
