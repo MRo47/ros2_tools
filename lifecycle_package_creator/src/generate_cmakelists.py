@@ -1,0 +1,36 @@
+from jinja2 import Environment, FileSystemLoader
+
+from utils import *
+
+
+def generate_cmakelists(template_dir: str, cmakelists_template: str,
+                        node_name: str, namespace: str, publishers: dict, subscribers: dict):
+    env = Environment(loader=FileSystemLoader(template_dir), trim_blocks=True)
+
+    env.filters['snake_case'] = to_snake_case
+    env.filters['package_name'] = get_package_name
+    env.globals['get_unique_pkgs'] = get_unique_packages
+
+    cmakelists_template = env.get_template(cmakelists_template)
+    package_xml_file = cmakelists_template.render(
+        node_name=node_name, namespace=namespace, subscribers=subscribers, publishers=publishers)
+
+    print(package_xml_file)
+
+
+if __name__ == "__main__":
+    template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
+    cmakelists_template = "cmakelists.template"
+    subscribers = {
+        "roi": "sensor_msgs::msg::RegionOfInterest",
+        "image": "sensor_msgs::msg::Image"
+    }
+
+    publishers = {
+        "roi": "sensor_msgs::msg::RegionOfInterest",
+        "image": "sensor_msgs::msg::Image",
+        "num": "std_msgs::msg::Float32"
+    }
+
+    generate_cmakelists(template_dir, cmakelists_template,
+                        "CodeMaker", "codega", publishers, subscribers)
