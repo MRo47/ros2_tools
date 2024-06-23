@@ -5,19 +5,19 @@
 
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 
-{% set merged_values = [] %}
-{% for key, value in publishers.items() -%}
-    {% if value not in merged_values -%}
-        {% set _ = merged_values.append(value) %}
+{% set unique_msg_types = [] %}
+{% for key, msg_type in publishers.items() -%}
+    {% if msg_type not in unique_msg_types -%}
+        {% set _ = unique_msg_types.append(msg_type) %}
     {%- endif %}
 {% endfor %}
-{% for key, value in subscribers.items() -%}
-    {% if value not in merged_values -%}
-        {% set _ = merged_values.append(value) %}
+{% for key, msg_type in subscribers.items() -%}
+    {% if msg_type not in unique_msg_types -%}
+        {% set _ = unique_msg_types.append(msg_type) %}
     {%- endif %}
 {% endfor %}
-{% for value in merged_values %}
-{{ value | header }}
+{% for msg_type in unique_msg_types %}
+{{ msg_type | header }}
 {% endfor %}
 
 namespace {{ namespace }}
