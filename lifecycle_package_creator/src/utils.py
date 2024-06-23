@@ -13,3 +13,7 @@ def to_header(msg_type):
     elems[-1] += '.hpp'
     header_str = "/".join(elems)
     return f'#include "{header_str}"'
+
+
+def get_package_name(msg_type):
+    return msg_type.split('::')[0]
