@@ -17,3 +17,26 @@ def to_header(msg_type):
 
 def get_package_name(msg_type):
     return msg_type.split('::')[0]
+
+
+def get_unique_msg_types(publishers, subscribers):
+    unique_msg_types = set()
+
+    for msg_type in publishers.values():
+        unique_msg_types.add(msg_type)
+
+    for msg_type in subscribers.values():
+        unique_msg_types.add(msg_type)
+
+    return list(unique_msg_types)
+
+
+def get_unique_packages(publishers, subscribers):
+    unique_pkg_types = set()
+    for msg_type in publishers.values():
+        unique_pkg_types.add(get_package_name(msg_type))
+
+    for msg_type in subscribers.values():
+        unique_pkg_types.add(get_package_name(msg_type))
+
+    return list(unique_pkg_types)

@@ -5,17 +5,7 @@
 
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 
-{% set unique_msg_types = [] %}
-{% for key, msg_type in publishers.items() -%}
-    {% if msg_type not in unique_msg_types -%}
-        {% set _ = unique_msg_types.append(msg_type) %}
-    {%- endif %}
-{% endfor %}
-{% for key, msg_type in subscribers.items() -%}
-    {% if msg_type not in unique_msg_types -%}
-        {% set _ = unique_msg_types.append(msg_type) %}
-    {%- endif %}
-{% endfor %}
+{% set unique_msg_types = get_unique_msg_types(publishers, subscribers) %}
 {% for msg_type in unique_msg_types %}
 {{ msg_type | header }}
 {% endfor %}

@@ -10,6 +10,7 @@ def generate_package_xml(template_dir: str, package_xml_template: str,
 
     env.filters['snake_case'] = to_snake_case
     env.filters['package_name'] = get_package_name
+    env.globals['get_unique_pkgs'] = get_unique_packages
 
     package_xml_template = env.get_template(package_xml_template)
     package_xml_file = package_xml_template.render(

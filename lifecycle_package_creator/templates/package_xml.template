@@ -9,21 +9,8 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  {% set unique_pkg = [] %}
-  {% for key, msg_type in publishers.items() -%}
-      {% set package = msg_type | package_name -%} 
-      {% if package not in unique_pkg -%}
-          {% set _ = unique_pkg.append(package) %}
-      {%- endif %}
-  {% endfor %}
-  {% for key, msg_type in subscribers.items() -%}
-      {% set package = msg_type | package_name -%} 
-      {% if package not in unique_pkg -%}
-          {% set _ = unique_pkg.append(package) %}
-      {%- endif %}
-  {% endfor %}
-
-  {% for msg_type in unique_pkg -%}
+  {% set unique_pkgs = get_unique_pkgs(publishers, subscribers) -%}
+  {% for msg_type in unique_pkgs -%}
   <build_depend>{{ msg_type }}</build_depend>
   {% endfor %}
 

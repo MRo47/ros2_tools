@@ -10,6 +10,7 @@ def generate_node_source(template_dir: str, hpp_template: str, cpp_template: str
     env.filters['snake_case'] = to_snake_case
     env.filters['upper_case'] = to_upper_case
     env.filters['header'] = to_header
+    env.globals['get_unique_msg_types'] = get_unique_msg_types
 
     hpp_template = env.get_template(hpp_template)
     hpp_file = hpp_template.render(node_name=node_name, namespace=namespace,
