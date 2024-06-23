@@ -108,7 +108,7 @@ def generate_package(config_file: Path, template_dir: Path, target_dir: Path):
 
 def main():
     config_file = Path(
-        "/home/myron/athena/ros2_tools/lifecycle_package_creator/test_config/object_segmenter.yaml")
+        "/home/myron/athena/ros2_tools/lifecycle_package_creator/example/object_segmenter.yaml")
     target_dir = Path(
         "/home/myron/athena/ros2_tools/lifecycle_package_creator/sandbox/test_pkg")
     template_dir = Path(
