@@ -17,7 +17,7 @@ def generate_readme(template_dir: str, readme_template: str, node_name: str,
                                          node_name=node_name, publishers=publishers,
                                          subscribers=subscribers, description=description)
 
-    print(readme_file)
+    return readme_file
 
 
 if __name__ == "__main__":
@@ -34,5 +34,5 @@ if __name__ == "__main__":
         "num": "std_msgs::msg::Float32"
     }
 
-    generate_readme(template_dir, readme_template,
-                    "CodeMaker", "codega", publishers, subscribers, "some description")
+    print(generate_readme(template_dir, readme_template,
+                          "CodeMaker", "codega", publishers, subscribers, "some description"))

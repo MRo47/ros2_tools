@@ -22,9 +22,7 @@ def generate_source(template_dir: str, hpp_template: str, cpp_template: str, mai
 
     main_template = env.get_template(main_template)
     main_file = main_template.render(node_name=node_name, namespace=namespace)
-    print(hpp_file)
-    print(cpp_file)
-    print(main_file)
+    return hpp_file, cpp_file, main_file
 
 
 if __name__ == "__main__":
@@ -42,5 +40,9 @@ if __name__ == "__main__":
         "image": "sensor_msgs::msg::Image"
     }
 
-    generate_source(template_dir, hpp_template, cpp_template, main_template, "CodeMaker",
-                    "codega", publishers, subscribers)
+    hpp_file, cpp_file, main_file = generate_source(template_dir, hpp_template, cpp_template, main_template, "CodeMaker",
+                                                    "codega", publishers, subscribers)
+
+    print(hpp_file)
+    print(cpp_file)
+    print(main_file)

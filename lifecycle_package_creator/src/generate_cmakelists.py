@@ -12,10 +12,8 @@ def generate_cmakelists(template_dir: str, cmakelists_template: str,
     env.globals['get_unique_pkgs'] = get_unique_packages
 
     cmakelists_template = env.get_template(cmakelists_template)
-    package_xml_file = cmakelists_template.render(
+    return cmakelists_template.render(
         node_name=node_name, namespace=namespace, subscribers=subscribers, publishers=publishers)
-
-    print(package_xml_file)
 
 
 if __name__ == "__main__":
@@ -32,5 +30,5 @@ if __name__ == "__main__":
         "num": "std_msgs::msg::Float32"
     }
 
-    generate_cmakelists(template_dir, cmakelists_template,
-                        "CodeMaker", "codega", publishers, subscribers)
+    print(generate_cmakelists(template_dir, cmakelists_template,
+                              "CodeMaker", "codega", publishers, subscribers))

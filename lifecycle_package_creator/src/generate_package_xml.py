@@ -13,12 +13,10 @@ def generate_package_xml(template_dir: str, package_xml_template: str,
     env.globals['get_unique_pkgs'] = get_unique_packages
 
     package_xml_template = env.get_template(package_xml_template)
-    package_xml_file = package_xml_template.render(
+    return package_xml_template.render(
         node_name=node_name, subscribers=subscribers, publishers=publishers,
         author_name=author_name, author_email=author_email, license_name=license_name,
         description=description)
-
-    print(package_xml_file)
 
 
 if __name__ == "__main__":
@@ -35,7 +33,7 @@ if __name__ == "__main__":
         "num": "std_msgs::msg::Float32"
     }
 
-    generate_package_xml(template_dir, package_xml_template,
-                         "CodeMaker", publishers, subscribers, "Myron Rodrigues",
-                         "rodriguesmyron47@gmail.com",
-                         "Apache-2.0", "some description")
+    print(generate_package_xml(template_dir, package_xml_template,
+                               "CodeMaker", publishers, subscribers, "Myron Rodrigues",
+                               "rodriguesmyron47@gmail.com",
+                               "Apache-2.0", "some description"))
