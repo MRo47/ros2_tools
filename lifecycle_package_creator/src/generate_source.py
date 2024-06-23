@@ -3,8 +3,8 @@ from jinja2 import Environment, FileSystemLoader
 from utils import *
 
 
-def generate_node_source(template_dir: str, hpp_template: str, cpp_template: str, main_template: str,
-                         node_name: str, namespace: str, publishers: dict, subscribers: dict):
+def generate_source(template_dir: str, hpp_template: str, cpp_template: str, main_template: str,
+                    node_name: str, namespace: str, publishers: dict, subscribers: dict):
     env = Environment(loader=FileSystemLoader(template_dir), trim_blocks=True)
 
     env.filters['snake_case'] = to_snake_case
@@ -42,5 +42,5 @@ if __name__ == "__main__":
         "image": "sensor_msgs::msg::Image"
     }
 
-    generate_node_source(template_dir, hpp_template, cpp_template, main_template, "CodeMaker",
-                         "codega", publishers, subscribers)
+    generate_source(template_dir, hpp_template, cpp_template, main_template, "CodeMaker",
+                    "codega", publishers, subscribers)
