@@ -7,6 +7,7 @@ from utils import *
 
 import yaml
 from pathlib import Path
+import argparse
 
 
 def yaml_to_dict(file_path):
@@ -107,13 +108,22 @@ def generate_package(config_file: Path, template_dir: Path, target_dir: Path):
 
 
 def main():
-    config_file = Path(
-        "/home/myron/athena/ros2_tools/lifecycle_package_creator/example/object_segmenter.yaml")
-    target_dir = Path(
-        "/home/myron/athena/ros2_tools/lifecycle_package_creator/sandbox/test_pkg")
-    template_dir = Path(
-        "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates")
-    generate_package(config_file, template_dir, target_dir)
+    parser = argparse.ArgumentParser(
+        description="Create a ROS2 lifecycle package from a yaml config file, "
+        "see https://github.com/MRo47/ros2_tools or ../example")
+    parser.add_argument(
+        "-c", "--config_file", help="The path to the example configuration file (YAML format)")
+    parser.add_argument(
+        "-t", "--target_dir", help="The path to the target directory for creating the new package"
+        " (target_dir will be created if not present, or it should be empty)")
+    args = parser.parse_args()
+
+    if args.config_file is None or args.target_dir is None:
+        parser.print_help()
+        parser.error("Both config_file and target_dir are required.")
+
+    template_dir = Path(__file__).resolve().parents[1]/"templates"
+    generate_package(args.config_file, template_dir, args.target_dir)
 
 
 if __name__ == "__main__":

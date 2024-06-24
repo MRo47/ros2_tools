@@ -36,6 +36,6 @@ if __name__ == "__main__":
     }
 
     print(generate_package_xml(template_dir, package_xml_template,
-                               "ObjectDetector", publishers, subscribers, "Kitty Fugues",
+                               "ObjectSegmenter", publishers, subscribers, "Kitty Fugues",
                                "kittyfugues14@robots.com",
                                "Apache-2.0", "detect objects in images"))

@@ -33,4 +33,4 @@ if __name__ == "__main__":
     }
 
     print(generate_cmakelists(template_dir, cmakelists_template,
-                              "ObjectDetector", "perception", publishers, subscribers))
+                              "ObjectSegmenter", "perception", publishers, subscribers))

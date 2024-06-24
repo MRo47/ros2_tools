@@ -20,5 +20,5 @@ if __name__ == "__main__":
     template_dir = Path(__file__).resolve().parents[1]/"templates"
     launch_template = "node_launch.j2"
 
-    print(generate_launch(template_dir, launch_template, "ObjectDetector",
+    print(generate_launch(template_dir, launch_template, "ObjectSegmenter",
                           "perception"))

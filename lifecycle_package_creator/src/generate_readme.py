@@ -37,4 +37,5 @@ if __name__ == "__main__":
     }
 
     print(generate_readme(template_dir, readme_template,
-                          "ObjectDetector", "perception", publishers, subscribers, "detect objects in images"))
+                          "ObjectSegmenter", "perception", publishers, subscribers,
+                          "detect and segment objects in images"))

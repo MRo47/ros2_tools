@@ -43,7 +43,8 @@ if __name__ == "__main__":
         "num": "std_msgs::msg::Float32"
     }
 
-    hpp_file, cpp_file, main_file = generate_source(template_dir, hpp_template, cpp_template, main_template, "ObjectDetector",
+    hpp_file, cpp_file, main_file = generate_source(template_dir, hpp_template, cpp_template,
+                                                    main_template, "ObjectSegmenter",
                                                     "perception", publishers, subscribers)
 
     print("########## HPP FILE ##########\n\n", hpp_file)
