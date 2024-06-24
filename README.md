@@ -1,7 +1,7 @@
-# ros2_tools
+# ROS2 tools
 Tools and tips for ROS2
 
-## ros2 lifecycle package creator
+## ROS2 lifecycle package creator
 
 Simplify lifecycle node package creation in ROS2 by writing templates for files using standard naming and publisher subscriber data.
 This package works best with standard ROS2 messages and if other packages follow the naming conventions like in ROS2.
@@ -25,7 +25,7 @@ python src/package_generator.py --config example/object_segmenter.yaml --target_
 
 ### Setup
 
-#### config file
+#### config_file
 
 ```yaml
 author: authors name
@@ -45,7 +45,7 @@ publishers:
 Susbcribers and publishers will have handles that will have names `topic1_sub_` or `topic3_pub_` respectively. 
 Topics will be named exactly as they are specified. eg: `topic1`
 
-#### target dir
+#### target_dir
 
 The package files will be put in `target_dir` ensure its empty or doesnt exist (will be created)
 
