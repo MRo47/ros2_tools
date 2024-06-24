@@ -1,5 +1,5 @@
-author: Myron Rodrigues
-email: rodriguesmyron47@gmail.com
+author: Kitty Fugues
+email: kittyfugues14@robots.com
 license: Apache-2.0
 node_name: ObjectSegmenter
 namespace: perception
@@ -9,4 +9,4 @@ subscribers:
 publishers:
   segmentation_mask: sensor_msgs::msg::Image
   roi: sensor_msgs::msg::RegionOfInterest
-  visualisation: sensor_msgs::msg::Image
+  num_objects: std_msgs::msg::Int32
