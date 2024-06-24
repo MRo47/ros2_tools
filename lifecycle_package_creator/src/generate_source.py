@@ -27,9 +27,9 @@ def generate_source(template_dir: str, hpp_template: str, cpp_template: str, mai
 
 if __name__ == "__main__":
     template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
-    cpp_template = "node_cpp.template"
-    hpp_template = "node_hpp.template"
-    main_template = "node_main.template"
+    cpp_template = "node_cpp.j2"
+    hpp_template = "node_hpp.j2"
+    main_template = "node_main.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
         "image": "sensor_msgs::msg::Image"

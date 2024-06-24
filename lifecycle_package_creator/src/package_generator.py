@@ -75,29 +75,29 @@ def generate_package(config_file: Path, template_dir: Path, target_dir: Path):
 
     # generate file and add data
     create_and_write_to_file(cmakelists,
-                             generate_cmakelists(template_dir, "cmakelists.template",
+                             generate_cmakelists(template_dir, "cmakelists.j2",
                                                  config["node_name"], config["namespace"],
                                                  config["publishers"], config["subscribers"]))
 
     create_and_write_to_file(readme,
-                             generate_readme(template_dir, "readme.template",
+                             generate_readme(template_dir, "readme.j2",
                                              config["node_name"], config["namespace"],
                                              config["publishers"], config["subscribers"],
                                              config["description"]))
 
     create_and_write_to_file(package_xml,
-                             generate_package_xml(template_dir, "package_xml.template",
+                             generate_package_xml(template_dir, "package_xml.j2",
                                                   config["node_name"], config["publishers"],
                                                   config["subscribers"], config["author"],
                                                   config["email"], config["license"],
                                                   config["description"]))
 
     create_and_write_to_file(launch,
-                             generate_launch(template_dir, "node_launch.template",
+                             generate_launch(template_dir, "node_launch.j2",
                                              config["node_name"], config["namespace"]))
 
     hpp_text, cpp_text, main_text = generate_source(
-        template_dir, "node_hpp.template", "node_cpp.template", "node_main.template",
+        template_dir, "node_hpp.j2", "node_cpp.j2", "node_main.j2",
         config["node_name"], config["namespace"], config["publishers"], config["subscribers"]
     )
 

@@ -18,7 +18,7 @@ def generate_cmakelists(template_dir: str, cmakelists_template: str,
 
 if __name__ == "__main__":
     template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
-    cmakelists_template = "cmakelists.template"
+    cmakelists_template = "cmakelists.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
         "image": "sensor_msgs::msg::Image"

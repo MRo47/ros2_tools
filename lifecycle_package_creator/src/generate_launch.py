@@ -16,7 +16,7 @@ def generate_launch(template_dir: str, launch_template: str,
 
 if __name__ == "__main__":
     template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
-    launch_template = "node_launch.template"
+    launch_template = "node_launch.j2"
 
     print(generate_launch(template_dir, launch_template, "CodeMaker",
                           "codega"))

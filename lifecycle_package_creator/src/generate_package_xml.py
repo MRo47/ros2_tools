@@ -21,7 +21,7 @@ def generate_package_xml(template_dir: str, package_xml_template: str,
 
 if __name__ == "__main__":
     template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
-    package_xml_template = "package_xml.template"
+    package_xml_template = "package_xml.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
         "image": "sensor_msgs::msg::Image"
