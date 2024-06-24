@@ -29,7 +29,7 @@ if __name__ == "__main__":
     publishers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
         "image": "sensor_msgs::msg::Image",
-        "num": "std_msgs::msg::Float32"
+        "num_objects": "std_msgs::msg::Int32"
     }
 
     print(generate_cmakelists(template_dir, cmakelists_template,
