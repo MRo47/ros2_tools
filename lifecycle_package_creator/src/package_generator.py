@@ -8,6 +8,7 @@ from utils import *
 import yaml
 from pathlib import Path
 import argparse
+import shutil
 
 
 def yaml_to_dict(file_path):
@@ -122,8 +123,12 @@ def main():
         parser.print_help()
         parser.error("Both config_file and target_dir are required.")
 
-    template_dir = Path(__file__).resolve().parents[1]/"templates"
+    top_level_dir = Path(__file__).resolve().parents[1]
+    template_dir = top_level_dir/"templates"
     generate_package(args.config_file, template_dir, args.target_dir)
+    package_files = top_level_dir/"package_files"
+    shutil.copy(package_files/".clang-format", args.target_dir)
+    print(f"copied .clang-format to {args.target_dir}")
 
 
 if __name__ == "__main__":
