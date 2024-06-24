@@ -13,12 +13,12 @@ python src/package_generator.py --config example/object_segmenter.yaml --target_
 ```
 
 ### What this package generates
-- `node.cpp` file
-- `node.hpp` file
-- `main.cpp` executable file
-- `node.launch.py` file with activated node
-- `package.xml` file with required subscriber and publisher dependencies
-- `CMakeLists.txt` file with required subscriber and publisher dependencies
+- `node.cpp`
+- `node.hpp`
+- `main.cpp` executable
+- `node.launch.py` with activated node
+- `package.xml` with required subscriber and publisher dependencies
+- `CMakeLists.txt` with required subscriber and publisher dependencies
 - `README.md` with provided subscriber and publisher data
 - adds `.clang-format` file as provided in repo [here](https://github.com/ament/ament_lint/blob/rolling/ament_clang_format/ament_clang_format/configuration/.clang-format)
 
@@ -42,7 +42,7 @@ publishers:
   topic4: type4
 ```
 
-susbcribers and publishers will have handles that will have names `topic1_sub_` or `topic3_pub_` respectively. 
+Susbcribers and publishers will have handles that will have names `topic1_sub_` or `topic3_pub_` respectively. 
 Topics will be named exactly as they are specified. eg: `topic1`
 
 #### target dir
