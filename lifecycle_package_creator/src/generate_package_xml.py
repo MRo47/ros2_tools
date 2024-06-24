@@ -20,7 +20,9 @@ def generate_package_xml(template_dir: str, package_xml_template: str,
 
 
 if __name__ == "__main__":
-    template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
+    from pathlib import Path
+
+    template_dir = Path(__file__).resolve().parents[1]/"templates"
     package_xml_template = "package_xml.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
@@ -34,6 +36,6 @@ if __name__ == "__main__":
     }
 
     print(generate_package_xml(template_dir, package_xml_template,
-                               "CodeMaker", publishers, subscribers, "Myron Rodrigues",
-                               "rodriguesmyron47@gmail.com",
-                               "Apache-2.0", "some description"))
+                               "ObjectDetector", publishers, subscribers, "Kitty Fugues",
+                               "kittyfugues14@robots.com",
+                               "Apache-2.0", "detect objects in images"))

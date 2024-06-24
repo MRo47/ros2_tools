@@ -17,7 +17,9 @@ def generate_cmakelists(template_dir: str, cmakelists_template: str,
 
 
 if __name__ == "__main__":
-    template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
+    from pathlib import Path
+
+    template_dir = Path(__file__).resolve().parents[1]/"templates"
     cmakelists_template = "cmakelists.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
@@ -31,4 +33,4 @@ if __name__ == "__main__":
     }
 
     print(generate_cmakelists(template_dir, cmakelists_template,
-                              "CodeMaker", "codega", publishers, subscribers))
+                              "ObjectDetector", "perception", publishers, subscribers))

@@ -21,7 +21,9 @@ def generate_readme(template_dir: str, readme_template: str, node_name: str,
 
 
 if __name__ == "__main__":
-    template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
+    from pathlib import Path
+
+    template_dir = Path(__file__).resolve().parents[1]/"templates"
     readme_template = "readme.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
@@ -35,4 +37,4 @@ if __name__ == "__main__":
     }
 
     print(generate_readme(template_dir, readme_template,
-                          "CodeMaker", "codega", publishers, subscribers, "some description"))
+                          "ObjectDetector", "perception", publishers, subscribers, "detect objects in images"))

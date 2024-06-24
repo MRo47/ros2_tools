@@ -26,7 +26,9 @@ def generate_source(template_dir: str, hpp_template: str, cpp_template: str, mai
 
 
 if __name__ == "__main__":
-    template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
+    from pathlib import Path
+
+    template_dir = Path(__file__).resolve().parents[1]/"templates"
     cpp_template = "node_cpp.j2"
     hpp_template = "node_hpp.j2"
     main_template = "node_main.j2"
@@ -37,12 +39,13 @@ if __name__ == "__main__":
 
     publishers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
-        "image": "sensor_msgs::msg::Image"
+        "image": "sensor_msgs::msg::Image",
+        "num": "std_msgs::msg::Float32"
     }
 
-    hpp_file, cpp_file, main_file = generate_source(template_dir, hpp_template, cpp_template, main_template, "CodeMaker",
-                                                    "codega", publishers, subscribers)
+    hpp_file, cpp_file, main_file = generate_source(template_dir, hpp_template, cpp_template, main_template, "ObjectDetector",
+                                                    "perception", publishers, subscribers)
 
-    print(hpp_file)
-    print(cpp_file)
-    print(main_file)
+    print("########## HPP FILE ##########\n\n", hpp_file)
+    print("\n\n########## CPP FILE ##########\n\n", cpp_file)
+    print("\n\n########## MAIN FILE ##########\n\n", main_file)

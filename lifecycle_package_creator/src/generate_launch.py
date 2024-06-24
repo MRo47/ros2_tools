@@ -15,8 +15,10 @@ def generate_launch(template_dir: str, launch_template: str,
 
 
 if __name__ == "__main__":
-    template_dir = "/home/myron/athena/ros2_tools/lifecycle_package_creator/templates"
+    from pathlib import Path
+
+    template_dir = Path(__file__).resolve().parents[1]/"templates"
     launch_template = "node_launch.j2"
 
-    print(generate_launch(template_dir, launch_template, "CodeMaker",
-                          "codega"))
+    print(generate_launch(template_dir, launch_template, "ObjectDetector",
+                          "perception"))
