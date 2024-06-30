@@ -111,7 +111,7 @@ def generate_package(config_file: Path, template_dir: Path, target_dir: Path):
 def main():
     parser = argparse.ArgumentParser(
         description="Create a ROS2 lifecycle package from a yaml config file, "
-        "see https://github.com/MRo47/ros2_tools or ../example")
+        "see ../README.md or ../example")
     parser.add_argument(
         "-c", "--config_file", help="The path to the example configuration file (YAML format)")
     parser.add_argument(
