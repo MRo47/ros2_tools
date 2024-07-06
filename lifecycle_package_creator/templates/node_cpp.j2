@@ -1,4 +1,4 @@
-#include "{{ namespace }}/{{ node_name | snake_case}}.hpp"
+#include "{{ node_name | snake_case }}/{{ node_name | snake_case}}.hpp"
 
 namespace {{ namespace }}
 {
@@ -31,11 +31,8 @@ namespace {{ namespace }}
 }
 
 {% for name, msg_type in subscribers.items() %}
-void {{ node_name }}::{{ name }}_callback(const {{ msg_type }} & {{ name }}_msg)
+void {{ node_name }}::{{ name }}_callback(const {{ msg_type }} & /*{{ name }}_msg*/)
 {
-  if (!{{ name }}_pub_->is_activated()) {
-    return;
-  }
   RCLCPP_DEBUG(get_logger(), "Got {{ name }} message");
 
   // publishers publish message

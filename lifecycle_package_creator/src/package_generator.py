@@ -70,7 +70,7 @@ def generate_package(config_file: Path, template_dir: Path, target_dir: Path):
     launch = target_dir/"launch" / \
         (to_snake_case(config["node_name"])+".launch.py")
     node_hpp = target_dir/"include" / \
-        config["namespace"]/(to_snake_case(config["node_name"])+".hpp")
+        to_snake_case(config["node_name"])/(to_snake_case(config["node_name"])+".hpp")
     node_cpp = target_dir/"src"/(to_snake_case(config["node_name"])+".cpp")
     node_main = target_dir/"src" / \
         (to_snake_case(config["node_name"])+"_node.cpp")
