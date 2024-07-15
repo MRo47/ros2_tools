@@ -1,0 +1,29 @@
+{
+	"name": "ros2_test",
+	"dockerFile": "Dockerfile",
+	"build": {
+		"args": {
+			"USER_NAME": "${localEnv:USER}"
+		},
+		// "initializeCommand": "bash export_env.sh"
+	},
+	"runArgs": [
+		"--network=host",
+		"--user=${localEnv:USER}",
+		"--cap-add=SYS_PTRACE", // required for GDB
+		"--privileged" // required for display, usb dev rules, debugging
+	],
+	"workspaceMount": "source=${localWorkspaceFolder}/container_ws,target=/home/${localEnv:USER}/container_ws,type=bind",
+	"workspaceFolder": "/home/${localEnv:USER}/container_ws/ros2_ws",
+	"mounts": [
+		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+		"source=/home/${localEnv:USER}/.ssh,target=/home/${localEnv:USER}/.ssh,type=bind,readonly",
+		"source=/home/${localEnv:USER}/data,target=/home/${localEnv:USER}/data,type=bind,consistency=cached",
+		// "source=/dev/bus/usb,target=/dev/bus/usb,type=bind,consistency=cached" // if usb access is required, set this depending on where usb is mounted
+	],
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}",
+		"QT_X11_NO_MITSHM": "1",
+		"NVIDIA_DRIVER_CAPABILITIES": "all"
+	}
+}
