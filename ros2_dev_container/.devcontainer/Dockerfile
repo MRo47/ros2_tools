@@ -1,10 +1,16 @@
-FROM ros:jazzy
+ARG ROS_DISTRO=jazzy
+
+FROM ros:${ROS_DISTRO} as base
+ENV ROS_DISTRO=${ROS_DISTRO}
 
 RUN export DEBIAN_FRONTEND=noninteractive
 
 # Add vscode user with same UID and GID as your host system, replace if one exists with same UID
 # (copied from https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user#_creating-a-nonroot-user)
 ARG USER_NAME=ros2
+ARG USER_ID
+ARG GROUP_NAME
+ARG GROUP_ID
 
 COPY .env /tmp/.env
 RUN . /tmp/.env && rm /tmp/.env && \
