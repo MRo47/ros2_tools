@@ -1,16 +1,9 @@
-version: '3'
 services:
-  base:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        ROS_DISTRO: jazzy
-        USER_NAME: $USER_NAME
-        USER_ID: $USER_ID
-        GROUP_NAME: $GROUP_NAME
-        GROUP_ID: $GROUP_ID
-      target: base
+  dev:
+    image: ros2_dev
+    extends:
+      file: docker-compose.base.yml
+      service: base
     # debugging
     cap_add:
       - SYS_PTRACE
@@ -20,10 +13,6 @@ services:
     tty: true
     network_mode: host
     ipc: host
-    environment:
-      - DISPLAY=$DISPLAY
-      - QT_X11_NO_MITSHM=1
-      - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw # gui
       - /home/$USER_NAME/.ssh:/home/$USER_NAME/.ssh:ro # git credentials

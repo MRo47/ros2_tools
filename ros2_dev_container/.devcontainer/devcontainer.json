@@ -1,8 +1,9 @@
 {
 	"name": "ros2",
 	"dockerComposeFile": [
-		"docker-compose.yml"
+		"docker-compose.base.yml",
+		"docker-compose.dev.yml"
 	],
-	"service": "base",
+	"service": "dev",
 	"workspaceFolder": "/home/${localEnv:USER}/workspaces/ros2_ws"
 }

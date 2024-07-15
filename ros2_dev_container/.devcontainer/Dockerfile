@@ -1,6 +1,6 @@
 ARG ROS_DISTRO=jazzy
 
-FROM ros:${ROS_DISTRO} as base
+FROM ros:${ROS_DISTRO} AS base
 ENV ROS_DISTRO=${ROS_DISTRO}
 
 RUN export DEBIAN_FRONTEND=noninteractive
