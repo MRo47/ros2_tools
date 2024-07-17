@@ -7,6 +7,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        USER_NAME: $USER_NAME
+        USER_ID: $USER_ID
+        GROUP_NAME: $GROUP_NAME
+        GROUP_ID: $GROUP_ID
       target: ros2_dev
     # debugging
     cap_add:

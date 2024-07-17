@@ -35,8 +35,7 @@ RUN apt-get update && \
     apt-get install -y $(cut -d# -f1 </tmp/apt-dev-packages | envsubst) \
     && rm -rf /var/lib/apt/lists/* /tmp/apt-dev-packages
 
-# Add vscode user with same UID and GID as your host system, replace if one exists with same UID
-# (copied from https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user#_creating-a-nonroot-user)
+# Add user with same UID and GID as your host system, replace if one exists with same UID
 ARG USER_NAME=ros2
 ARG USER_ID
 ARG GROUP_NAME

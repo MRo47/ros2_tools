@@ -6,10 +6,6 @@ services:
       dockerfile: Dockerfile
       args:
         ROS_DISTRO: jazzy
-        USER_NAME: $USER_NAME
-        USER_ID: $USER_ID
-        GROUP_NAME: $GROUP_NAME
-        GROUP_ID: $GROUP_ID
       target: ros2_base
     environment:
       - DISPLAY=$DISPLAY
