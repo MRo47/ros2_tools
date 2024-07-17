@@ -5,6 +5,36 @@ ENV ROS_DISTRO=${ROS_DISTRO}
 
 RUN export DEBIAN_FRONTEND=noninteractive
 
+# Install basic packages and set up locales
+RUN apt update -y && apt-get -y install --no-install-recommends locales gettext \
+    && rm -rf /var/lib/apt/lists/*
+RUN locale-gen en_GB.UTF-8; update-locale LC_ALL=en_GB.UTF-8 LANG=en_GB.UTF-8
+ENV LANG en_GB.UTF-8
+
+# Install apt packages
+COPY apt-base-packages /tmp/apt-base-packages
+RUN apt-get update && \
+    apt-get install -y $(cut -d# -f1 </tmp/apt-base-packages | envsubst) \
+    && rm -rf /var/lib/apt/lists/* /tmp/apt-base-packages
+
+## Computer vision stage
+FROM ros2_base AS ros2_cv
+
+# Install apt packages
+COPY apt-cv-packages /tmp/apt-cv-packages
+RUN apt-get update && \
+    apt-get install -y $(cut -d# -f1 </tmp/apt-cv-packages | envsubst) \
+    && rm -rf /var/lib/apt/lists/* /tmp/apt-cv-packages
+
+## Development stage
+FROM ros2_cv AS ros2_dev
+
+# Install apt packages
+COPY apt-dev-packages /tmp/apt-dev-packages
+RUN apt-get update && \
+    apt-get install -y $(cut -d# -f1 </tmp/apt-dev-packages | envsubst) \
+    && rm -rf /var/lib/apt/lists/* /tmp/apt-dev-packages
+
 # Add vscode user with same UID and GID as your host system, replace if one exists with same UID
 # (copied from https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user#_creating-a-nonroot-user)
 ARG USER_NAME=ros2
@@ -30,39 +60,9 @@ RUN if getent group $GROUP_ID > /dev/null; then \
     && echo $USER_NAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USER_NAME \
     && chmod 0440 /etc/sudoers.d/$USER_NAME
 
-# Install basic packages and set up locales
-RUN apt update -y && apt-get -y install --no-install-recommends locales gettext \
-    && rm -rf /var/lib/apt/lists/*
-RUN locale-gen en_GB.UTF-8; update-locale LC_ALL=en_GB.UTF-8 LANG=en_GB.UTF-8
-ENV LANG en_GB.UTF-8
-
-# Install apt packages
-COPY apt-base-packages /tmp/apt-base-packages
-RUN apt-get update && \
-    apt-get install -y $(cut -d# -f1 </tmp/apt-base-packages | envsubst) \
-    && rm -rf /var/lib/apt/lists/* /tmp/apt-base-packages
-
 # Add user to video group to allow access to webcam
 RUN sudo usermod --append --groups video $USER_NAME
 
 RUN rosdep update
 
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USER_NAME}/.bashrc
-
-## Computer vision stage
-FROM ros2_base AS ros2_cv
-
-# Install apt packages
-COPY apt-cv-packages /tmp/apt-cv-packages
-RUN apt-get update && \
-    apt-get install -y $(cut -d# -f1 </tmp/apt-cv-packages | envsubst) \
-    && rm -rf /var/lib/apt/lists/* /tmp/apt-cv-packages
-
-## Development stage
-FROM ros2_cv AS ros2_dev
-
-# Install apt packages
-COPY apt-dev-packages /tmp/apt-dev-packages
-RUN apt-get update && \
-    apt-get install -y $(cut -d# -f1 </tmp/apt-dev-packages | envsubst) \
-    && rm -rf /var/lib/apt/lists/* /tmp/apt-dev-packages
