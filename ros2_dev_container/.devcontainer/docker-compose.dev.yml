@@ -2,8 +2,8 @@ services:
   dev:
     image: ros2_dev
     extends:
-      file: docker-compose.base.yml
-      service: base
+      file: docker-compose.cv.yml
+      service: computer_vision
     # debugging
     cap_add:
       - SYS_PTRACE

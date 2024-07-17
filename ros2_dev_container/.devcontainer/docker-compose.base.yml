@@ -3,14 +3,14 @@ services:
     image: ros2_base
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.base
       args:
         ROS_DISTRO: jazzy
         USER_NAME: $USER_NAME
         USER_ID: $USER_ID
         GROUP_NAME: $GROUP_NAME
         GROUP_ID: $GROUP_ID
-      target: base
+      # target: ros2_base
     environment:
       - DISPLAY=$DISPLAY
       - QT_X11_NO_MITSHM=1

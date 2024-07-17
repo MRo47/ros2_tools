@@ -1,0 +1,12 @@
+# cv dependencies (optional)
+libopencv-dev
+libopencv-contrib-dev
+python3-opencv
+libyaml-cpp-dev
+libjsoncpp-dev
+libeigen3-dev
+libglew-dev
+libglfw3-dev
+libgtest-dev
+libpcl-dev
+nlohmann-json3-dev

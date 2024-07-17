@@ -1,6 +1,6 @@
 ARG ROS_DISTRO=jazzy
 
-FROM ros:${ROS_DISTRO} AS base
+FROM ros:${ROS_DISTRO}
 ENV ROS_DISTRO=${ROS_DISTRO}
 
 RUN export DEBIAN_FRONTEND=noninteractive
@@ -39,11 +39,10 @@ RUN locale-gen en_GB.UTF-8; update-locale LC_ALL=en_GB.UTF-8 LANG=en_GB.UTF-8
 ENV LANG en_GB.UTF-8
 
 # Install apt packages
-COPY apt-packages /tmp/apt-packages
+COPY apt-base-packages /tmp/apt-base-packages
 RUN apt-get update && \
-    echo "packages: $(cut -d# -f1 </tmp/apt-packages | envsubst)" && \
-    apt-get install -y $(cut -d# -f1 </tmp/apt-packages | envsubst) \
-    && rm -rf /var/lib/apt/lists/* /tmp/apt-packages
+    apt-get install -y $(cut -d# -f1 </tmp/apt-base-packages | envsubst) \
+    && rm -rf /var/lib/apt/lists/* /tmp/apt-base-packages
 
 # Switch from root to user
 USER $USER_NAME

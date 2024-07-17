@@ -2,6 +2,7 @@
 	"name": "ros2",
 	"dockerComposeFile": [
 		"docker-compose.base.yml",
+		"docker-compose.cv.yml",
 		"docker-compose.dev.yml"
 	],
 	"service": "dev",
