@@ -1,0 +1,31 @@
+services:
+  dev:
+    image: ros2_dev
+    extends:
+      file: docker-compose.cv.yml
+      service: computer_vision
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_NAME: $USER_NAME
+        USER_ID: $USER_ID
+        GROUP_NAME: $GROUP_NAME
+        GROUP_ID: $GROUP_ID
+      target: ros2_dev
+    # debugging
+    cap_add:
+      - SYS_PTRACE
+    privileged: true
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    network_mode: host
+    ipc: host
+    user: $USER_NAME
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw # gui
+      - /home/$USER_NAME/.ssh:/home/$USER_NAME/.ssh:ro # git credentials
+      - /home/$USER_NAME/data:/home/$USER_NAME/data:rw
+      - /dev/bus/usb:/dev/bus/usb # for usb access, depends where its located
+      - ../workspaces:/home/$USER_NAME/workspaces

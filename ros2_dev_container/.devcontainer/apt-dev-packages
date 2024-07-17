@@ -1,0 +1,12 @@
+# recommended tools
+git-lfs
+
+# ROS packages (optional)
+ros-$ROS_DISTRO-rviz2
+ros-$ROS_DISTRO-tf-transformations
+ros-$ROS_DISTRO-rqt-graph
+ros-$ROS_DISTRO-rosbag2-storage-mcap
+ros-$ROS_DISTRO-ament-cmake-clang-format
+
+# debugging (optional)
+gdb

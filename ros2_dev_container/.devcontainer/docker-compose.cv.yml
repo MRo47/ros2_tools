@@ -1,0 +1,10 @@
+services:
+  computer_vision:
+    image: ros2_cv
+    extends:
+      file: docker-compose.base.yml
+      service: base
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ros2_cv
