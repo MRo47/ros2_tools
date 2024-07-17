@@ -6,4 +6,5 @@ services:
       service: base
     build:
       context: .
-      dockerfile: Dockerfile.cv
+      dockerfile: Dockerfile
+      target: ros2_cv

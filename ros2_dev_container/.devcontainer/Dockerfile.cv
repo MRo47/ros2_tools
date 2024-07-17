@@ -1,7 +1,0 @@
-FROM ros2_base
-
-# Install apt packages
-COPY apt-cv-packages /tmp/apt-cv-packages
-RUN apt-get update && \
-  apt-get install -y $(cut -d# -f1 </tmp/apt-cv-packages | envsubst) \
-  && rm -rf /var/lib/apt/lists/* /tmp/apt-cv-packages

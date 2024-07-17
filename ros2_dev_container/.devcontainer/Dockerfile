@@ -1,6 +1,6 @@
 ARG ROS_DISTRO=jazzy
 
-FROM ros:${ROS_DISTRO}
+FROM ros:${ROS_DISTRO} AS ros2_base
 ENV ROS_DISTRO=${ROS_DISTRO}
 
 RUN export DEBIAN_FRONTEND=noninteractive
@@ -12,9 +12,7 @@ ARG USER_ID
 ARG GROUP_NAME
 ARG GROUP_ID
 
-COPY .env /tmp/.env
-RUN . /tmp/.env && rm /tmp/.env && \
-    if getent group $GROUP_ID > /dev/null; then \
+RUN if getent group $GROUP_ID > /dev/null; then \
     OLD_GROUP_NAME=$(getent group $GROUP_ID |  cut -d: -f1); \
     groupmod --new-name $USER_NAME $OLD_GROUP_NAME; \
     else \
@@ -44,16 +42,19 @@ RUN apt-get update && \
     apt-get install -y $(cut -d# -f1 </tmp/apt-base-packages | envsubst) \
     && rm -rf /var/lib/apt/lists/* /tmp/apt-base-packages
 
-# Switch from root to user
-USER $USER_NAME
-
 # Add user to video group to allow access to webcam
 RUN sudo usermod --append --groups video $USER_NAME
 
-# Rosdep update
 RUN rosdep update
 
-# Source the ROS setup file
-RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USER_NAME}/.bashrc
 
+## Computer vision stage
+FROM ros2_base AS ros2_cv
+
+# Install apt packages
+COPY apt-cv-packages /tmp/apt-cv-packages
+RUN apt-get update && \
+    apt-get install -y $(cut -d# -f1 </tmp/apt-cv-packages | envsubst) \
+    && rm -rf /var/lib/apt/lists/* /tmp/apt-cv-packages
 

@@ -13,6 +13,7 @@ services:
     tty: true
     network_mode: host
     ipc: host
+    user: $USER_NAME
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw # gui
       - /home/$USER_NAME/.ssh:/home/$USER_NAME/.ssh:ro # git credentials
