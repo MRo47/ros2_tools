@@ -10,3 +10,12 @@ libglfw3-dev
 libgtest-dev
 libpcl-dev
 nlohmann-json3-dev
+
+# ros vision deps
+ros-$ROS_DISTRO-image-publisher
+ros-$ROS_DISTRO-image-common
+ros-$ROS_DISTRO-vision-msgs
+ros-$ROS_DISTRO-vision-opencv
+ros-$ROS_DISTRO-pcl-conversions
+ros-$ROS_DISTRO-camera-calibration
+ros-$ROS_DISTRO-image-view

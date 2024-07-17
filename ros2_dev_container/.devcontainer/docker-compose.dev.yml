@@ -4,6 +4,10 @@ services:
     extends:
       file: docker-compose.cv.yml
       service: computer_vision
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ros2_dev
     # debugging
     cap_add:
       - SYS_PTRACE

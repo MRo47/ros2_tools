@@ -58,3 +58,11 @@ RUN apt-get update && \
     apt-get install -y $(cut -d# -f1 </tmp/apt-cv-packages | envsubst) \
     && rm -rf /var/lib/apt/lists/* /tmp/apt-cv-packages
 
+## Development stage
+FROM ros2_cv AS ros2_dev
+
+# Install apt packages
+COPY apt-dev-packages /tmp/apt-dev-packages
+RUN apt-get update && \
+    apt-get install -y $(cut -d# -f1 </tmp/apt-dev-packages | envsubst) \
+    && rm -rf /var/lib/apt/lists/* /tmp/apt-dev-packages
