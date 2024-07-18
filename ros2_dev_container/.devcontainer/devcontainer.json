@@ -6,5 +6,5 @@
 		"docker-compose.dev.yml"
 	],
 	"service": "dev",
-	"workspaceFolder": "/home/${localEnv:USER}/workspaces/ros2_ws"
+	"workspaceFolder": "/home/${localEnv:USER}/workspaces"
 }
