@@ -109,7 +109,7 @@ bash export_env.sh
 
 Make sure you have the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed in vscode.
 
-Open `ros2_dev_container` directory in vscode > press F1 > `Dev Containers: Rebuild and Reopen in Container`.
+Open `ros2_dev_container` directory in vscode > press `F1` > `Dev Containers: Rebuild and Reopen in Container`.
 
 Usually once built vscode will ask you to open this directory in container, which you can say yes.
 Or from command palette `F1` and run `Reopen in Container`.
@@ -118,8 +118,7 @@ Or from command palette `F1` and run `Reopen in Container`.
 
 ### 3. For non vscode users
 
-- the setup will remain same.
-- generate the `.env` file.
+The initial setup remains the same. Generate the `.env` file in `.devcontainer`.
 
 ```bash
 # from ros2_dev_container
@@ -128,58 +127,53 @@ bash export_env.sh
 
 #### 3.a. Using docker-compose
 
-Make sure you have the [compose](https://github.com/docker/compose?tab=readme-ov-file#where-to-get-docker-compose) extension installed.
-```bash
-sudo apt-get install docker-compose-plugin
-```
+- To build or run the containers
 
-- to build or run the containers
-
-```bash
-# from ros2_dev_container
-docker-compose -f .devcontainer/docker-compose.base.yml -f .devcontainer/docker-compose.cv.yml -f .devcontainer/docker-compose.dev.yml up -d
-```
+  ```bash
+  # from ros2_dev_container
+  docker-compose -f .devcontainer/docker-compose.base.yml -f .devcontainer/docker-compose.cv.yml -f .devcontainer/docker-compose.dev.yml up -d
+  ```
 
 - To get shell access into the container while its running. Get the name of the dev container from command above and run the following from another terminal.
 
-```bash
-docker exec -it <container_name> /bin/bash
-```
+  ```bash
+  docker exec -it <container_name> /bin/bash
+  ```
 
 - To stop the containers.
 
-```bash
-# from ros2_dev_container
-docker compose -f .devcontainer/docker-compose.base.yml -f .devcontainer/docker-compose.cv.yml -f .devcontainer/docker-compose.dev.yml down
-```
+  ```bash
+  # from ros2_dev_container
+  docker compose -f .devcontainer/docker-compose.base.yml -f .devcontainer/docker-compose.cv.yml -f .devcontainer/docker-compose.dev.yml down
+  ```
 
 #### 3.b. Using devcontainers-cli
 
 The [cli](https://github.com/devcontainers/cli) version of the vscode extension can also be used.
 
-- To build and start the container  
+- To build and start the containe.
 
-```bash
-# from ros2_dev_container
-devcontainer up --workspace-folder .
-``` 
+  ```bash
+  # from ros2_dev_container
+  devcontainer up --workspace-folder .
+  ``` 
 
 - To get shell access into the container while its running.
 
-```bash
-# from ros2_dev_container
-devcontainer exec --workspace-folder . bash
-``` 
+  ```bash
+  # from ros2_dev_container
+  devcontainer exec --workspace-folder . bash
+  ``` 
 
 - To stop the container
 
-```bash
-# To list all running containers
-docker ps
-
-# To stop the container by its ID
-docker stop <container_id>
-
-# To remove the container entirely
-docker rm <container_id>
-```
+  ```bash
+  # To list all running containers
+  docker ps
+  
+  # To stop the container by its ID
+  docker stop <container_id>
+  
+  # To remove the container entirely
+  docker rm <container_id>
+  ```
