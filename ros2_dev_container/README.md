@@ -5,6 +5,8 @@ Dev containers, are Docker containers that are specifically configured to provid
 
 ## Setup
 
+Check the official instructions: [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/) first, and follow the (post-installation steps)[https://docs.docker.com/engine/install/linux-postinstall/].
+
 To setup a dev container, three different types of files need to be configured.
 
 ### 1. Dockerfile
