@@ -153,14 +153,14 @@ bash export_env.sh
 
 The [cli](https://github.com/devcontainers/cli) version of the vscode extension can also be used.
 
-- To build and start the containe.
+- To build and start the container. This achieves the same as running `Devcontainers: Rebuild` from vscode's command prompt.
 
   ```bash
   # from ros2_dev_container
-  devcontainer up --workspace-folder .
+  devcontainer up --remove-existing-container --workspace-folder .
   ``` 
 
-- To get shell access into the container while its running.
+- To get shell access into the container while its running. This achieves the equivalent as running `Devcontainers: Reopen in Container` in vscode.
 
   ```bash
   # from ros2_dev_container
