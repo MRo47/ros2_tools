@@ -5,7 +5,7 @@ Dev containers, are Docker containers that are specifically configured to provid
 
 ## Setup
 
-Check the official instructions: [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/) first, and follow the (post-installation steps)[https://docs.docker.com/engine/install/linux-postinstall/].
+Check the official instructions: [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/) first, and follow the [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
 
 To setup a dev container, three different types of files need to be configured.
 
@@ -81,16 +81,24 @@ This file uses the `docker-compose.yml` files to build the services and also pro
 
 ```json
 {
-  "name": "ros2", // this will show up as container name in vscode
-  "dockerComposeFile": [ // files appear in order they extend base > cv > dev
+  "name": "ros2",
+  "dockerComposeFile": [
     "docker-compose.base.yml",
     "docker-compose.cv.yml",
     "docker-compose.dev.yml"
   ],
-  "service": "dev", // the service you want to attach to
-  "workspaceFolder": "/home/${localEnv:USER}/workspaces/ros2_ws" // workspace dir to open by default inside your service
+  "service": "dev",
+  "workspaceFolder": "/home/${localEnv:USER}/workspaces/ros2_ws"
 }
 ```
+
+`name:` will be the name shown inside dev container.
+
+`dockerComposeFile:` will be all the compose files used to build this dev container, they should appear in order they are used, ie. base > cv > dev.
+
+`service:` will be the service in which we will work in, dev obviously in our case.
+
+`workspaceFolder:` will be the directory inside the dev container that will be opened in vs-code when the container is started.
 
 For more info see [this](https://code.visualstudio.com/docs/devcontainers/create-dev-container).
 
@@ -158,14 +166,14 @@ The [cli](https://github.com/devcontainers/cli) version of the vscode extension 
   ```bash
   # from ros2_dev_container
   devcontainer up --remove-existing-container --workspace-folder .
-  ``` 
+  ```
 
 - To get shell access into the container while its running. This achieves the equivalent as running `Devcontainers: Reopen in Container` in vscode.
 
   ```bash
   # from ros2_dev_container
   devcontainer exec --workspace-folder . bash
-  ``` 
+  ```
 
 - To stop the container
 
