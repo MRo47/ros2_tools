@@ -2,16 +2,23 @@ import rosbag2_py
 from rclpy.serialization import serialize_message
 import numpy as np
 from cv_bridge import CvBridge
-from rclpy.time import Time
+import builtin_interfaces.msg
 from std_msgs.msg import Header
 
 
 def create_topic(
-    writer, topic: str, topic_type="sensor_msgs/msg/Image", serialization_format="cdr"
+    writer,
+    id: int,
+    topic: str,
+    topic_type="sensor_msgs/msg/Image",
+    serialization_format="cdr",
 ):
     writer.create_topic(
         rosbag2_py.TopicMetadata(
-            name=topic, type=topic_type, serialization_format=serialization_format
+            id=id,
+            name=topic,
+            type=topic_type,
+            serialization_format=serialization_format,
         )
     )
 
@@ -27,7 +34,7 @@ def write_message(
     header.frame_id = frame_id
     ts_s = int(timestamp // 1e9)
     ts_ns = int(timestamp % 1e9)
-    header.stamp = Time(ts_s, ts_ns)
+    header.stamp = builtin_interfaces.msg.Time(sec=ts_s, nanosec=ts_ns)
     msg = CvBridge().cv2_to_imgmsg(image, header=header, encoding="passthrough")
     msg.height, msg.width = image.shape
     writer.write(topic, serialize_message(msg), timestamp)
