@@ -1,21 +1,12 @@
-import argparse
-
 import rosbag2_py
-import image_handler as ih
+import image_handler as img_h
+import imu_handler as imu_h
 from pathlib import Path
-import cv2
-
-# API: https://docs.ros.org/en/iron/p/rosbag2_compression/generated/classrosbag2__compression_1_1SequentialCompressionWriter.html
+from rclpy.serialization import serialize_message
 
 
 def write_to(in_path: Path, output_path: Path):
-    compression_options = rosbag2_py.CompressionOptions()
-    compression_options.compression_format = "zstd"
-    compression_options.compression_mode = rosbag2_py.CompressionMode.FILE
-    # compression_options.compression_queue_size = 8
-    # compression_options.compression_threads = 8
-    # writer = rosbag2_py.SequentialWriter()
-    writer = rosbag2_py.SequentialCompressionWriter(compression_options)
+    writer = rosbag2_py.SequentialWriter()
 
     writer.open(
         rosbag2_py.StorageOptions(uri=str(output_path), storage_id="mcap"),
@@ -24,16 +15,35 @@ def write_to(in_path: Path, output_path: Path):
         ),
     )
 
-    cam0_topic = "/mav0/cam0/image_mono"
-    ih.create_topic(writer, id=0, topic=cam0_topic)
-
     cam0_dir = in_path / "mav0/cam0/data/"
+    cam1_dir = in_path / "mav0/cam1/data/"
+    imu0_file = in_path / "mav0/imu0/data.csv"
 
-    for img_path in cam0_dir.iterdir():
-        if img_path.suffix == ".png":
-            timestamp = int(img_path.stem)
-            img = cv2.imread(str(img_path), cv2.IMREAD_GRAYSCALE)
-            ih.write_message(writer, "cam0", cam0_topic, img, timestamp)
+    data_maps = {
+        "cam0": {"topic": "/mav0/cam0/image_mono", "frame_id": "cam0"},
+        "cam1": {"topic": "/mav0/cam1/image_mono", "frame_id": "cam1"},
+        "imu0": {"topic": "/mav0/imu0/imu", "frame_id": "imu0"},
+    }
+
+    img_h.create_topic(writer, 0, data_maps["cam0"]["topic"])
+    img_h.create_topic(writer, 1, data_maps["cam1"]["topic"])
+    imu_h.create_topic(writer, 2, data_maps["imu0"]["topic"])
+
+    data_generators = [
+        img_h.msg_generator(
+            cam0_dir, data_maps["cam0"]["frame_id"], data_maps["cam0"]["topic"]
+        ),
+        img_h.msg_generator(
+            cam1_dir, data_maps["cam1"]["frame_id"], data_maps["cam1"]["topic"]
+        ),
+        imu_h.msg_generator(
+            imu0_file, data_maps["imu0"]["frame_id"], data_maps["imu0"]["topic"]
+        ),
+    ]
+
+    for gen in data_generators:
+        for topic, msg, timestamp in gen:
+            writer.write(topic, serialize_message(msg), timestamp)
 
     del writer
 
@@ -45,10 +55,9 @@ def main():
     # args = parser.parse_args()
     # write_to(args.output)
     in_path = Path("~/data/vslam/asl_eth/MH_01_easy/").expanduser().resolve()
-    out_path = (
-        Path("~/data/vslam/asl_eth/exports/MH_01_easy_ros2bag").expanduser().resolve()
-    )
-    out_path.parent.mkdir(parents=True, exist_ok=False)
+    out_path = Path("~/data/vslam/asl_eth/exports/").expanduser().resolve()
+    out_path = out_path / (in_path.stem + "_rosbag2")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
 
     write_to(in_path, out_path)
 
