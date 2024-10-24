@@ -5,6 +5,7 @@ import imu_handler as imu_h
 import position_handler as pos_h
 from pathlib import Path
 from rclpy.serialization import serialize_message
+import gt_handler as gt_h
 
 
 def write_to(in_path: Path, output_path: Path):
@@ -21,18 +22,27 @@ def write_to(in_path: Path, output_path: Path):
     cam1_dir = in_path / "mav0/cam1/data/"
     imu0_file = in_path / "mav0/imu0/data.csv"
     pos_file = in_path / "mav0/leica0/data.csv"
+    gt_file = in_path / "mav0/state_groundtruth_estimate0/data.csv"
+
+    gt_frame = "imu0"
 
     data_maps = {
         "cam0": {"topic": "/mav0/cam0/image_mono", "frame_id": "cam0"},
         "cam1": {"topic": "/mav0/cam1/image_mono", "frame_id": "cam1"},
         "imu0": {"topic": "/mav0/imu0/imu", "frame_id": "imu0"},
         "leica0": {"topic": "/mav0/leica0/pose", "frame_id": "leica0"},
+        "gt_pose": {"topic": "/mav0/gt/pose", "frame_id": gt_frame},
+        "gt_vel": {"topic": "/mav0/gt/vel", "frame_id": gt_frame},
+        "gt_imu_bias": {"topic": "/mav0/gt/imu_bias", "frame_id": gt_frame},
     }
 
     img_h.create_topic(writer, 0, data_maps["cam0"]["topic"])
     img_h.create_topic(writer, 1, data_maps["cam1"]["topic"])
     imu_h.create_topic(writer, 2, data_maps["imu0"]["topic"])
     pos_h.create_topic(writer, 3, data_maps["leica0"]["topic"])
+    gt_h.create_pose_topic(writer, 4, data_maps["gt_pose"]["topic"])
+    gt_h.create_twist_topic(writer, 5, data_maps["gt_vel"]["topic"])
+    gt_h.create_imu_bias_topic(writer, 6, data_maps["gt_imu_bias"]["topic"])
 
     data_generators = [
         img_h.msg_generator(
@@ -46,6 +56,13 @@ def write_to(in_path: Path, output_path: Path):
         ),
         pos_h.msg_generator(
             pos_file, data_maps["leica0"]["frame_id"], data_maps["leica0"]["topic"]
+        ),
+        gt_h.msg_generator(
+            gt_file,
+            gt_frame,
+            data_maps["gt_pose"]["topic"],
+            data_maps["gt_vel"]["topic"],
+            data_maps["gt_imu_bias"]["topic"],
         ),
     ]
 
