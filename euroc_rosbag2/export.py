@@ -1,6 +1,8 @@
+import argparse
 import rosbag2_py
 import image_handler as img_h
 import imu_handler as imu_h
+import position_handler as pos_h
 from pathlib import Path
 from rclpy.serialization import serialize_message
 
@@ -18,16 +20,19 @@ def write_to(in_path: Path, output_path: Path):
     cam0_dir = in_path / "mav0/cam0/data/"
     cam1_dir = in_path / "mav0/cam1/data/"
     imu0_file = in_path / "mav0/imu0/data.csv"
+    pos_file = in_path / "mav0/leica0/data.csv"
 
     data_maps = {
         "cam0": {"topic": "/mav0/cam0/image_mono", "frame_id": "cam0"},
         "cam1": {"topic": "/mav0/cam1/image_mono", "frame_id": "cam1"},
         "imu0": {"topic": "/mav0/imu0/imu", "frame_id": "imu0"},
+        "leica0": {"topic": "/mav0/leica0/pose", "frame_id": "leica0"},
     }
 
     img_h.create_topic(writer, 0, data_maps["cam0"]["topic"])
     img_h.create_topic(writer, 1, data_maps["cam1"]["topic"])
     imu_h.create_topic(writer, 2, data_maps["imu0"]["topic"])
+    pos_h.create_topic(writer, 3, data_maps["leica0"]["topic"])
 
     data_generators = [
         img_h.msg_generator(
@@ -38,6 +43,9 @@ def write_to(in_path: Path, output_path: Path):
         ),
         imu_h.msg_generator(
             imu0_file, data_maps["imu0"]["frame_id"], data_maps["imu0"]["topic"]
+        ),
+        pos_h.msg_generator(
+            pos_file, data_maps["leica0"]["frame_id"], data_maps["leica0"]["topic"]
         ),
     ]
 
@@ -51,8 +59,14 @@ def write_to(in_path: Path, output_path: Path):
 def main():
     # parser = argparse.ArgumentParser(description=__doc__)
     # parser.add_argument("output", help="output directory to create and write to")
+    # parser.add_argument("input", help="input ros2 bag file path")
 
     # args = parser.parse_args()
+    # in_path = Path(args.input).expanduser().resolve()
+    # out_path = Path(args.output).expanduser().resolve() / (in_path.stem + "_rosbag2")
+    # out_path.parent.mkdir(parents=True, exist_ok=True)
+    # write_to(in_path, out_path)
+
     # write_to(args.output)
     in_path = Path("~/data/vslam/asl_eth/MH_01_easy/").expanduser().resolve()
     out_path = Path("~/data/vslam/asl_eth/exports/").expanduser().resolve()
