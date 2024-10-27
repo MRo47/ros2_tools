@@ -1,6 +1,6 @@
 import argparse
 import rosbag2_py
-import image_handler as img_h
+import euroc_rosbag2.camera_handler as cam_h
 import imu_handler as imu_h
 import position_handler as pos_h
 from pathlib import Path
@@ -36,8 +36,8 @@ def write_to(in_path: Path, output_path: Path):
         "gt_imu_bias": {"topic": "/mav0/gt/imu_bias", "frame_id": gt_frame},
     }
 
-    img_h.create_topic(writer, 0, data_maps["cam0"]["topic"])
-    img_h.create_topic(writer, 1, data_maps["cam1"]["topic"])
+    cam_h.create_topic(writer, 0, data_maps["cam0"]["topic"])
+    cam_h.create_topic(writer, 1, data_maps["cam1"]["topic"])
     imu_h.create_topic(writer, 2, data_maps["imu0"]["topic"])
     pos_h.create_topic(writer, 3, data_maps["leica0"]["topic"])
     gt_h.create_pose_topic(writer, 4, data_maps["gt_pose"]["topic"])
@@ -45,10 +45,10 @@ def write_to(in_path: Path, output_path: Path):
     gt_h.create_imu_bias_topic(writer, 6, data_maps["gt_imu_bias"]["topic"])
 
     data_generators = [
-        img_h.msg_generator(
+        cam_h.msg_generator(
             cam0_dir, data_maps["cam0"]["frame_id"], data_maps["cam0"]["topic"]
         ),
-        img_h.msg_generator(
+        cam_h.msg_generator(
             cam1_dir, data_maps["cam1"]["frame_id"], data_maps["cam1"]["topic"]
         ),
         imu_h.msg_generator(
