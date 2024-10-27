@@ -3,6 +3,7 @@ from rclpy.time import Time
 from geometry_msgs.msg import TransformStamped
 import tf_transformations
 import yaml
+import numpy as np
 
 
 def to_ros_timestamp(timestamp_ns: int):
@@ -13,7 +14,7 @@ def to_ros_timestamp(timestamp_ns: int):
 
 # Function to create TransformStamped from matrix
 def create_transform_msg(
-    parent_frame, child_frame, matrix: list, timestamp=Time(seconds=0).to_msg()
+    parent_frame, child_frame, matrix: np.array, timestamp=Time(seconds=0).to_msg()
 ) -> tuple[TransformStamped, int]:
     """
     Create a TransformStamped message from a transformation matrix.
@@ -21,16 +22,14 @@ def create_transform_msg(
     Args:
         parent_frame (str): The name of the parent coordinate frame.
         child_frame (str): The name of the child coordinate frame.
-        matrix (list): A 4x4 transformation matrix representing
-                        the translation and rotation.
+        matrix (np.array): A 4x4 transformation matrix representing
+                            the translation and rotation.
         timestamp (builtin_interfaces.msg.Time, optional): The timestamp
                                 for the transformation. Defaults to the
                                 epoch time conversion.
 
     Returns:
-        tuple: A tuple containing:
-            - TransformStamped: The resulting TransformStamped message.
-            - int: The timestamp in nanoseconds as an integer.
+        TransformStamped: The resulting TransformStamped message.
     """
     transform_msg = TransformStamped()
     transform_msg.header.stamp = timestamp
@@ -40,15 +39,15 @@ def create_transform_msg(
     quat = tf_transformations.quaternion_from_matrix(matrix)
 
     # Populate translation and rotation
-    transform_msg.transform.translation.x = matrix[3]
-    transform_msg.transform.translation.y = matrix[7]
-    transform_msg.transform.translation.z = matrix[11]
+    transform_msg.transform.translation.x = matrix[0, 3]
+    transform_msg.transform.translation.y = matrix[1, 3]
+    transform_msg.transform.translation.z = matrix[2, 3]
     transform_msg.transform.rotation.x = quat[0]
     transform_msg.transform.rotation.y = quat[1]
     transform_msg.transform.rotation.z = quat[2]
     transform_msg.transform.rotation.w = quat[3]
 
-    return transform_msg, int(timestamp.sec * 1e9 + timestamp.nanosec)
+    return transform_msg
 
 
 def get_frame_transform_msg(
@@ -60,6 +59,6 @@ def get_frame_transform_msg(
     with open(calib_file_path, "r") as f:
         calib_data = yaml.safe_load(f)
 
-    return create_transform_msg(
-        parent_frame, child_frame, calib_data["T_BS"]["data"], timestamp=timestamp
-    )
+    tf_mat = np.array(calib_data["T_BS"]["data"]).reshape((4, 4))
+
+    return create_transform_msg(parent_frame, child_frame, tf_mat, timestamp=timestamp)

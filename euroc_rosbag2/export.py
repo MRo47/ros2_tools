@@ -6,6 +6,8 @@ import position_handler as pos_h
 from pathlib import Path
 from rclpy.serialization import serialize_message
 import gt_handler as gt_h
+from utils import get_frame_transform_msg
+from tf2_msgs.msg import TFMessage
 
 
 def write_to(in_path: Path, output_path: Path):
@@ -54,6 +56,35 @@ def write_to(in_path: Path, output_path: Path):
     gt_h.create_pose_topic(writer, 6, data_maps["gt_pose"]["topic"])
     gt_h.create_twist_topic(writer, 7, data_maps["gt_vel"]["topic"])
     gt_h.create_imu_bias_topic(writer, 8, data_maps["gt_imu_bias"]["topic"])
+
+    writer.create_topic(
+        rosbag2_py.TopicMetadata(
+            id=9,
+            name="/tf_static",
+            type="tf2_msgs/msg/TFMessage",
+            serialization_format="cdr",
+        )
+    )
+
+    static_tf = TFMessage()
+
+    static_tf.transforms = [
+        get_frame_transform_msg(
+            imu0_config_file, "base_link", data_maps["imu0"]["frame_id"]
+        ),
+        get_frame_transform_msg(
+            cam0_config_file, "base_link", data_maps["cam0_image"]["frame_id"]
+        ),
+        get_frame_transform_msg(
+            cam1_config_file, "base_link", data_maps["cam1_image"]["frame_id"]
+        ),
+        get_frame_transform_msg(
+            pos_config_file, "base_link", data_maps["leica0"]["frame_id"]
+        ),
+        get_frame_transform_msg(gt_config_file, "base_link", gt_frame),
+    ]
+
+    writer.write("/tf_static", serialize_message(static_tf), 0)
 
     data_generators = [
         cam_h.msg_generator(
