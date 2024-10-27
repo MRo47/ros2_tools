@@ -1,6 +1,6 @@
 import argparse
 import rosbag2_py
-import euroc_rosbag2.camera_handler as cam_h
+import camera_handler as cam_h
 import imu_handler as imu_h
 import position_handler as pos_h
 from pathlib import Path
@@ -19,16 +19,23 @@ def write_to(in_path: Path, output_path: Path):
     )
 
     cam0_dir = in_path / "mav0/cam0/data/"
+    cam0_config_file = in_path / "mav0/cam0/sensor.yaml"
     cam1_dir = in_path / "mav0/cam1/data/"
+    cam1_config_file = in_path / "mav0/cam1/sensor.yaml"
     imu0_file = in_path / "mav0/imu0/data.csv"
+    imu0_config_file = in_path / "mav0/imu0/sensor.yaml"
     pos_file = in_path / "mav0/leica0/data.csv"
+    pos_config_file = in_path / "mav0/leica0/sensor.yaml"
     gt_file = in_path / "mav0/state_groundtruth_estimate0/data.csv"
+    gt_config_file = in_path / "mav0/state_groundtruth_estimate0/sensor.yaml"
 
     gt_frame = "imu0"
 
     data_maps = {
-        "cam0": {"topic": "/mav0/cam0/image_mono", "frame_id": "cam0"},
-        "cam1": {"topic": "/mav0/cam1/image_mono", "frame_id": "cam1"},
+        "cam0_image": {"topic": "/mav0/cam0/image_mono", "frame_id": "cam0"},
+        "cam0_info": {"topic": "/mav0/cam0/camera_info", "frame_id": "cam0"},
+        "cam1_image": {"topic": "/mav0/cam1/image_mono", "frame_id": "cam1"},
+        "cam1_info": {"topic": "/mav0/cam1/camera_info", "frame_id": "cam1"},
         "imu0": {"topic": "/mav0/imu0/imu", "frame_id": "imu0"},
         "leica0": {"topic": "/mav0/leica0/pose", "frame_id": "leica0"},
         "gt_pose": {"topic": "/mav0/gt/pose", "frame_id": gt_frame},
@@ -36,23 +43,38 @@ def write_to(in_path: Path, output_path: Path):
         "gt_imu_bias": {"topic": "/mav0/gt/imu_bias", "frame_id": gt_frame},
     }
 
-    cam_h.create_topic(writer, 0, data_maps["cam0"]["topic"])
-    cam_h.create_topic(writer, 1, data_maps["cam1"]["topic"])
-    imu_h.create_topic(writer, 2, data_maps["imu0"]["topic"])
-    pos_h.create_topic(writer, 3, data_maps["leica0"]["topic"])
-    gt_h.create_pose_topic(writer, 4, data_maps["gt_pose"]["topic"])
-    gt_h.create_twist_topic(writer, 5, data_maps["gt_vel"]["topic"])
-    gt_h.create_imu_bias_topic(writer, 6, data_maps["gt_imu_bias"]["topic"])
+    cam_h.create_image_topic(writer, 0, data_maps["cam0_image"]["topic"])
+    cam_h.create_info_topic(writer, 1, data_maps["cam0_info"]["topic"])
+
+    cam_h.create_image_topic(writer, 2, data_maps["cam1_image"]["topic"])
+    cam_h.create_info_topic(writer, 3, data_maps["cam1_info"]["topic"])
+
+    imu_h.create_topic(writer, 4, data_maps["imu0"]["topic"])
+    pos_h.create_topic(writer, 5, data_maps["leica0"]["topic"])
+    gt_h.create_pose_topic(writer, 6, data_maps["gt_pose"]["topic"])
+    gt_h.create_twist_topic(writer, 7, data_maps["gt_vel"]["topic"])
+    gt_h.create_imu_bias_topic(writer, 8, data_maps["gt_imu_bias"]["topic"])
 
     data_generators = [
         cam_h.msg_generator(
-            cam0_dir, data_maps["cam0"]["frame_id"], data_maps["cam0"]["topic"]
+            cam0_dir,
+            cam0_config_file,
+            data_maps["cam0_image"]["frame_id"],
+            data_maps["cam0_image"]["topic"],
+            data_maps["cam0_info"]["topic"],
         ),
         cam_h.msg_generator(
-            cam1_dir, data_maps["cam1"]["frame_id"], data_maps["cam1"]["topic"]
+            cam1_dir,
+            cam1_config_file,
+            data_maps["cam1_image"]["frame_id"],
+            data_maps["cam1_image"]["topic"],
+            data_maps["cam1_info"]["topic"],
         ),
         imu_h.msg_generator(
-            imu0_file, data_maps["imu0"]["frame_id"], data_maps["imu0"]["topic"]
+            imu0_file,
+            imu0_config_file,
+            data_maps["imu0"]["frame_id"],
+            data_maps["imu0"]["topic"],
         ),
         pos_h.msg_generator(
             pos_file, data_maps["leica0"]["frame_id"], data_maps["leica0"]["topic"]
