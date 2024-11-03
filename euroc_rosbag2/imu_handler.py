@@ -24,43 +24,13 @@ def create_topic(
     )
 
 
-def msg_generator(csv_file_path, calib_file_path, frame_id: str, topic: str):
-    # Load IMU calibration data
-    with open(calib_file_path, "r") as f:
-        calib_data = yaml.safe_load(f)
+def msg_generator(csv_file_path, frame_id: str, topic: str):
 
-    freq = calib_data["rate_hz"]
+    angular_velocity_cov = [0] * 9
 
-    angular_velocity_cov_value = calib_data["gyroscope_noise_density"] ** 2 * freq
-    linear_acceleration_cov_value = (
-        calib_data["accelerometer_noise_density"] ** 2 * freq
-    )
+    linear_acceleration_cov = [0] * 9
 
-    angular_velocity_cov = [
-        angular_velocity_cov_value,
-        0,
-        0,
-        0,
-        angular_velocity_cov_value,
-        0,
-        0,
-        0,
-        angular_velocity_cov_value,
-    ]
-
-    linear_acceleration_cov = [
-        linear_acceleration_cov_value,
-        0,
-        0,
-        0,
-        linear_acceleration_cov_value,
-        0,
-        0,
-        0,
-        linear_acceleration_cov_value,
-    ]
-
-    orientation_cov = [1e-2, 0, 0, 0, 1e-2, 0, 0, 0, 1e-2]  # unknown
+    orientation_cov = [1e6, 0, 0, 0, 1e6, 0, 0, 0, 1e6]  # unknown
 
     # Load CSV data using numpy, skipping the header row
     data = np.loadtxt(csv_file_path, delimiter=",", skiprows=1)
