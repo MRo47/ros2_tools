@@ -1,0 +1,4 @@
+/tf_static:
+  durability: transient_local
+  history: keep_last
+  depth: 1
