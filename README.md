@@ -1,5 +1,12 @@
 # ROS2 tools
-Tools and tips for ROS2
+
+Cool tools and tricks for ros2 development
+
+## [ROS2 dev container](https://medium.com/@mro47/dev-containers-ros2-f6010c7e2f97)
+
+Development container environment for ROS2. Reducing the uncertainty in "it works on my machine and hopefully yours too".
+
+Here is the [readme](ros2_dev_container/README.md).
 
 ## ROS2 lifecycle package creator
 
@@ -53,3 +60,4 @@ The package files will be put in `target_dir` ensure its empty or doesnt exist (
 - add license file
 - add license header
 - add parameter helpers
+
