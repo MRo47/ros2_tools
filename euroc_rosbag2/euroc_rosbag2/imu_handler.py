@@ -1,8 +1,9 @@
-import numpy as np
-from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Quaternion
-from std_msgs.msg import Header
+import numpy as np
 import rosbag2_py
+from sensor_msgs.msg import Imu
+from std_msgs.msg import Header
+
 from .utils import to_ros_timestamp
 
 

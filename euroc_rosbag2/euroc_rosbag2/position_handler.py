@@ -1,7 +1,8 @@
-import numpy as np
 from geometry_msgs.msg import PointStamped
-from std_msgs.msg import Header
+import numpy as np
 import rosbag2_py
+from std_msgs.msg import Header
+
 from .utils import to_ros_timestamp
 
 

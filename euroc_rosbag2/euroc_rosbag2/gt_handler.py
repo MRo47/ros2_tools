@@ -1,8 +1,10 @@
+from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import TwistStamped
 import numpy as np
-from geometry_msgs.msg import PoseStamped, TwistStamped
+import rosbag2_py
 from sensor_msgs.msg import Imu
 from std_msgs.msg import Header
-import rosbag2_py
+
 from .utils import to_ros_timestamp
 
 
