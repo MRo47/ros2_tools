@@ -34,15 +34,15 @@ def write_to(in_path: Path, output_path: Path):
     gt_frame = "imu0"
 
     data_maps = {
-        "cam0_image": {"topic": "/mav0/cam0/image_mono", "frame_id": "cam0"},
-        "cam0_info": {"topic": "/mav0/cam0/camera_info", "frame_id": "cam0"},
-        "cam1_image": {"topic": "/mav0/cam1/image_mono", "frame_id": "cam1"},
-        "cam1_info": {"topic": "/mav0/cam1/camera_info", "frame_id": "cam1"},
-        "imu0": {"topic": "/mav0/imu0/imu", "frame_id": "imu0"},
-        "leica0": {"topic": "/mav0/leica0/pose", "frame_id": "leica0"},
-        "gt_pose": {"topic": "/mav0/gt/pose", "frame_id": gt_frame},
-        "gt_vel": {"topic": "/mav0/gt/vel", "frame_id": gt_frame},
-        "gt_imu_bias": {"topic": "/mav0/gt/imu_bias", "frame_id": gt_frame},
+        "cam0_image": {"topic": "cam0/image_mono", "frame_id": "cam0"},
+        "cam0_info": {"topic": "cam0/camera_info", "frame_id": "cam0"},
+        "cam1_image": {"topic": "cam1/image_mono", "frame_id": "cam1"},
+        "cam1_info": {"topic": "cam1/camera_info", "frame_id": "cam1"},
+        "imu0": {"topic": "imu0/imu", "frame_id": "imu0"},
+        "leica0": {"topic": "leica0/pose", "frame_id": "leica0"},
+        "gt_pose": {"topic": "gt/pose", "frame_id": gt_frame},
+        "gt_vel": {"topic": "gt/vel", "frame_id": gt_frame},
+        "gt_imu_bias": {"topic": "gt/imu_bias", "frame_id": gt_frame},
     }
 
     cam_h.create_image_topic(writer, 0, data_maps["cam0_image"]["topic"])

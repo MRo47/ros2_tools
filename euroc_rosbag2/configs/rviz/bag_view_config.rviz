@@ -60,7 +60,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /mav0/leica0/pose
+        Value: /leica0/pose
       Value: true
     - Alpha: 1
       Axes Length: 1
@@ -80,7 +80,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /mav0/gt/pose
+        Value: /gt/pose
       Value: true
     - Class: rviz_default_plugins/Image
       Enabled: true
@@ -94,7 +94,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /mav0/cam1/image_mono
+        Value: /cam0/image_mono
       Value: true
     - Class: rviz_default_plugins/Image
       Enabled: true
@@ -108,14 +108,14 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /mav0/cam0/image_mono
+        Value: /cam1/image_mono
       Value: true
     - Alpha: 1
       Angular Arrow Scale: 2
       Angular Color: 204; 204; 51
       Arrow Width: 0.5
       Class: rviz_default_plugins/TwistStamped
-      Enabled: false
+      Enabled: true
       Hide Small Values: true
       History Length: 1
       Linear Arrow Scale: 2
@@ -128,7 +128,7 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /mav0/gt/vel
-      Value: false
+      Value: true
     - Class: rviz_default_plugins/Axes
       Enabled: true
       Length: 1
@@ -182,7 +182,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 11.467367172241211
+      Distance: 16.110824584960938
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -197,10 +197,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.18039798736572266
+      Pitch: 0.3403978645801544
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.593563556671143
+      Yaw: 4.70356559753418
     Saved: ~
 Window Geometry:
   Displays:
