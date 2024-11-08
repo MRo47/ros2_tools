@@ -2,7 +2,7 @@ import numpy as np
 from geometry_msgs.msg import PointStamped
 from std_msgs.msg import Header
 import rosbag2_py
-from utils import to_ros_timestamp
+from .utils import to_ros_timestamp
 
 
 def create_topic(

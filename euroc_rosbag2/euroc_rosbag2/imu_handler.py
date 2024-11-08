@@ -3,8 +3,7 @@ from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Quaternion
 from std_msgs.msg import Header
 import rosbag2_py
-from utils import to_ros_timestamp
-import yaml
+from .utils import to_ros_timestamp
 
 
 def create_topic(
