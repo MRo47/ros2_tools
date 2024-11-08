@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+"""
+Export data from euroc_rosbag2 to a rosbag2 file.
+
+Usage:
+    export.py [-h] --output OUTPUT_ROSBAG2_PATH --input INPUT_PATH_TO_EUROC_MAV_DATA
+"""
+
 import argparse
 from pathlib import Path
 
@@ -133,22 +141,17 @@ def write_to(in_path: Path, output_path: Path):
 
 
 def main():
-    # parser = argparse.ArgumentParser(description=__doc__)
-    # parser.add_argument("output", help="output directory to create and write to")
-    # parser.add_argument("input", help="input ros2 bag file path")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "-o", "--output", required=True, help="output directory to create and write to"
+    )
+    parser.add_argument("-i", "--input", required=True, help="input ros2 bag file path")
 
-    # args = parser.parse_args()
-    # in_path = Path(args.input).expanduser().resolve()
-    # out_path = Path(args.output).expanduser().resolve() / (in_path.stem + "_rosbag2")
-    # out_path.parent.mkdir(parents=True, exist_ok=True)
-    # write_to(in_path, out_path)
-
-    # write_to(args.output)
-    in_path = Path("~/data/vslam/asl_eth/MH_01_easy/").expanduser().resolve()
-    out_path = Path("~/data/vslam/asl_eth/exports/").expanduser().resolve()
-    out_path = out_path / (in_path.stem + "_rosbag2")
+    args = parser.parse_args()
+    in_path = Path(args.input).expanduser().resolve()
+    out_path = Path(args.output).expanduser().resolve() / (in_path.stem + "_rosbag2")
     out_path.parent.mkdir(parents=True, exist_ok=True)
-
+    print(f"Writing to {out_path}...")
     write_to(in_path, out_path)
 
 
