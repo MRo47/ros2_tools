@@ -1,13 +1,13 @@
 # EuRoC MAV Dataset to rosbag2 exporter
 
-export data arranged in [EuRoC MAV Dataset](https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets) to rosbag2
+export data arranged in [EuRoC MAV Dataset](https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets) to rosbag2 mcap format
 
 ## Usage
 
 ### Export to rosbag2
 
 ```bash
-python3 export.py
+python3 export.py --input ~/data/vslam/asl_eth/MH_01_easy --output ~/data/exports
 ```
 
 ### Play the bag
