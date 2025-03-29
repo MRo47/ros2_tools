@@ -4,8 +4,29 @@ Simplify lifecycle package creation in ROS2 by generating boilerplate files.
 
 This package works best with standard ROS2 messages and for custom interfaces follow the naming conventions like in ROS2 official packages.
 
-## Demo
+## Install and run locally using poetry
 
+- make sure poetry is installed, then run
+```bash
+# from top level (same where README.md is located)
+poetry install
+```
+- enter the poetry env
+```bash
+eval $(poetry env activate)
+```
+- now run
+```bash
+lifecycle-pkg-create --help
+```
+
+## Run locally without poetry
+
+- install dependencies
+```bash
+pip install jinja2 pyyaml
+```
+- run
 ```bash
 python src/main.py --config example/object_segmenter.yaml --target_dir example_pkg
 ```
