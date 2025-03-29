@@ -1,6 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 
-from utils import *
+from .utils import *
 
 
 def generate_package_xml(template_dir: str, package_xml_template: str,

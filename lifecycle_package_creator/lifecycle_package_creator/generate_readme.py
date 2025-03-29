@@ -1,6 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 
-from utils import *
+from .utils import *
 
 
 def generate_readme(template_dir: str, readme_template: str, node_name: str,

@@ -1,6 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 
-from utils import *
+from .utils import *
 
 
 def generate_launch(template_dir: str, launch_template: str,

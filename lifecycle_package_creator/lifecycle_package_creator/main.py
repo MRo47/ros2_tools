@@ -1,7 +1,7 @@
 from pathlib import Path
 import argparse
 import shutil
-from package_generator import generate_package
+from .package_generator import generate_package
 
 
 def main():

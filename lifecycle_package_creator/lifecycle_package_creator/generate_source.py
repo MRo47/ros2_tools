@@ -1,6 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 
-from utils import *
+from .utils import *
 
 
 def generate_source(template_dir: str, hpp_template: str, cpp_template: str, main_template: str,
