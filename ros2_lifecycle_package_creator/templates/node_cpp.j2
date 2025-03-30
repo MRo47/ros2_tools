@@ -1,0 +1,94 @@
+#include "{{ node_name | snake_case }}/{{ node_name | snake_case}}.hpp"
+
+namespace {{ namespace }}
+{
+
+{{ node_name }}::{{ node_name }}(const rclcpp::NodeOptions & options)
+: rclcpp_lifecycle::LifecycleNode("{{ node_name | snake_case }}", options)
+{
+}
+
+{{ node_name }}::CallbackReturn {{ node_name }}::on_configure(const rclcpp_lifecycle::State & /*state*/)
+{
+  RCLCPP_INFO(get_logger(), "configuring");
+
+  auto qos = rclcpp::SystemDefaultsQoS{};
+
+  {% for name, msg_type in subscribers.items() -%}
+  {{ name }}_sub_ = create_subscription<{{ msg_type }}>(
+    "{{ name }}", qos, [this]({{ msg_type }}::SharedPtr {{ name }}_msg) { {{ name }}_callback(*{{ name }}_msg); });
+  {% endfor %}
+
+  {% for name, msg_type in publishers.items() -%}
+  {{ name }}_pub_ = create_publisher<{{ msg_type }}>("{{ name }}", qos);
+  {% endfor %}
+
+  // TODO: allocate any resources
+
+  RCLCPP_INFO(get_logger(), "configured");
+
+  return CallbackReturn::SUCCESS;
+}
+
+{% for name, msg_type in subscribers.items() %}
+void {{ node_name }}::{{ name }}_callback(const {{ msg_type }} & /*{{ name }}_msg*/)
+{
+  RCLCPP_DEBUG(get_logger(), "Got {{ name }} message");
+
+  // publishers publish message
+}
+
+{% endfor -%}
+
+{{ node_name }}::CallbackReturn {{ node_name }}::on_activate(const rclcpp_lifecycle::State & state)
+{
+  RCLCPP_INFO(get_logger(), "on_activate called");
+
+  // TODO: Run main code section on allocated resources
+
+  return LifecycleNode::on_activate(state);
+}
+
+{{ node_name }}::CallbackReturn {{ node_name }}::on_deactivate(
+  const rclcpp_lifecycle::State & state)
+{
+  RCLCPP_INFO(get_logger(), "on_deactivate called");
+
+  // TODO: Release resources
+
+  return LifecycleNode::on_deactivate(state);
+}
+
+void {{ node_name }}::reset() noexcept
+{
+  {% for name, msg_type in subscribers.items() -%}
+  if ({{ name }}_sub_) {{ name }}_sub_.reset();
+  {% endfor %}
+
+  {% for name, msg_type in publishers.items() -%}
+  if ({{ name }}_pub_) {{ name }}_pub_.reset();
+  {% endfor %}
+  
+  // TODO: any cleanup
+}
+
+{{ node_name }}::CallbackReturn {{ node_name }}::on_cleanup(
+  const rclcpp_lifecycle::State & /*state*/)
+{
+  RCLCPP_INFO(get_logger(), "Cleaning up");
+  reset();
+  return CallbackReturn::SUCCESS;
+}
+
+{{ node_name }}::CallbackReturn {{ node_name }}::on_shutdown(
+  const rclcpp_lifecycle::State & /*state*/)
+{
+  RCLCPP_INFO(get_logger(), "Shutting down");
+  reset();
+  return CallbackReturn::SUCCESS;
+}
+
+}  // namespace {{ namespace }}
+
+#include "rclcpp_components/register_node_macro.hpp"
+RCLCPP_COMPONENTS_REGISTER_NODE({{ namespace }}::{{ node_name }})

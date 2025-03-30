@@ -1,0 +1,17 @@
+#include <memory>
+
+#include "{{ node_name | snake_case }}/{{ node_name | snake_case }}.hpp"
+#include "rclcpp/rclcpp.hpp"
+
+int main(int argc, char ** argv)
+{
+  rclcpp::init(argc, argv);
+
+  auto {{ node_name | snake_case}}_node = std::make_shared<{{ namespace }}::{{ node_name }}>();
+
+  rclcpp::spin({{ node_name | snake_case}}_node->get_node_base_interface());
+
+  rclcpp::shutdown();
+
+  return 0;
+}

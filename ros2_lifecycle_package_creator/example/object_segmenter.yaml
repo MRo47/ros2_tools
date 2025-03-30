@@ -1,0 +1,12 @@
+author: Kitty Fugues
+email: kittyfugues14@robots.com
+license: Apache-2.0
+node_name: ObjectSegmenter
+namespace: perception
+description: ROS2 package to segment objects out of images 
+subscribers:
+  image: sensor_msgs::msg::Image
+publishers:
+  segmentation_mask: sensor_msgs::msg::Image
+  roi: sensor_msgs::msg::RegionOfInterest
+  num_objects: std_msgs::msg::Int32

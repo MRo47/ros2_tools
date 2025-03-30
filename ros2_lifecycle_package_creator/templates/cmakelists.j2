@@ -1,0 +1,91 @@
+cmake_minimum_required(VERSION 3.8)
+project({{ node_name | snake_case }})
+
+# Default to C++17
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rcpputils REQUIRED)
+find_package(rclcpp_components REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+{% set unique_pkgs = get_unique_pkgs(publishers, subscribers) -%}
+{% for package in unique_pkgs -%}
+find_package({{ package }} REQUIRED)
+{% endfor %}
+
+add_library({{ node_name | snake_case }}_component SHARED
+  src/{{ node_name | snake_case}}.cpp
+)
+
+target_include_directories({{ node_name | snake_case }}_component PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
+target_include_directories({{ node_name | snake_case }}_component SYSTEM PUBLIC
+  # external system lib headers
+  # ${OpenCV_INCLUDE_DIRS}
+)
+
+set({{ node_name | snake_case }}_dependencies
+  rclcpp
+  rclcpp_components
+  rclcpp_lifecycle
+  rcpputils
+  {% for package in unique_pkgs -%}
+  {{ package }}
+  {% endfor %}
+
+)
+
+ament_target_dependencies({{ node_name | snake_case}}_component
+  ${{'{'}}{{ node_name | snake_case }}_dependencies}
+)
+
+target_link_libraries({{ node_name | snake_case}}_component
+ # external libs
+ # ${OpenCV_LIBS}
+)
+
+rclcpp_components_register_node(
+  {{ node_name | snake_case}}_component
+  PLUGIN "{{ namespace }}::{{ node_name }}"
+  EXECUTABLE {{ node_name | snake_case}}
+)
+
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  set(ament_cmake_uncrustify_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+
+  # find_package(ament_cmake_gtest REQUIRED)
+  # add_subdirectory(test/gtests)
+endif()
+
+ament_export_targets(export_{{ node_name | snake_case}}_component)
+install(TARGETS {{ node_name | snake_case}}_component
+  EXPORT export_{{ node_name | snake_case}}_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
+# install(DIRECTORY
+#   config
+#   DESTINATION share/${PROJECT_NAME}/
+# )
+
+ament_package()

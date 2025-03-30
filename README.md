@@ -7,3 +7,9 @@ Cool tools and tricks for ros2 development
 Development container environment for ROS2. Reducing the uncertainty in "it works on my machine and hopefully yours too".
 
 Here is the [readme](ros2_dev_container/README.md).
+
+## ROS2 lifecycle package creator
+
+Generate boilerplate files for ROS2 lifecycle nodes upto a minimum compilable package.
+
+Here is the [readme](ros2_lifecycle_package_creator/README.md).

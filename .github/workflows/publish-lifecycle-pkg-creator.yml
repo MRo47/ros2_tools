@@ -1,0 +1,33 @@
+name: Publish ros2_lifecycle_package_creator to PyPI
+
+on:
+  release:
+    types: [published]  # Runs when a new GitHub Release is created
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Configure Poetry
+        run: poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Build and Publish
+        run: |
+          cd ros2_tools/ros2_lifecycle_package_creator
+          poetry build
+          poetry publish

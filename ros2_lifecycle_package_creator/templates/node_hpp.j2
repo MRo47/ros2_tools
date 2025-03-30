@@ -1,0 +1,44 @@
+#ifndef {{ node_name | upper_case }}__{{ node_name | upper_case}}_HPP_
+#define {{ node_name | upper_case }}__{{ node_name | upper_case}}_HPP_
+
+#include <memory>
+
+#include "rclcpp_lifecycle/lifecycle_node.hpp"
+
+{% set unique_msg_types = get_unique_msg_types(publishers, subscribers) %}
+{% for msg_type in unique_msg_types %}
+{{ msg_type | header }}
+{% endfor %}
+
+namespace {{ namespace }}
+{
+class {{ node_name }} : public rclcpp_lifecycle::LifecycleNode
+{
+public:
+  explicit {{ node_name }}(const rclcpp::NodeOptions & options);
+
+private:
+  CallbackReturn on_configure(const rclcpp_lifecycle::State &) override;
+  CallbackReturn on_activate(const rclcpp_lifecycle::State & state) override;
+  CallbackReturn on_deactivate(const rclcpp_lifecycle::State & state) override;
+  CallbackReturn on_cleanup(const rclcpp_lifecycle::State &) override;
+  CallbackReturn on_shutdown(const rclcpp_lifecycle::State &) override;
+
+  void reset() noexcept;
+
+  {% for name, msg_type in subscribers.items() -%}
+  void {{ name }}_callback(const {{ msg_type }} & {{ name }}_msg);
+  {% endfor %}
+
+  {% for name, msg_type in subscribers.items() -%}
+  rclcpp::Subscription<{{msg_type}}>::SharedPtr {{name}}_sub_;
+  {% endfor %}
+
+  {% for name, msg_type in publishers.items() -%}
+  rclcpp_lifecycle::LifecyclePublisher<{{msg_type}}>::SharedPtr {{name}}_pub_;
+  {% endfor %}
+
+};
+}  // namespace {{ namespace }}
+
+#endif  // {{ node_name | upper_case }}__{{ node_name | upper_case}}_HPP_

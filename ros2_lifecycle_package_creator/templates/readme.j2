@@ -1,0 +1,21 @@
+# {{ namespace | human_readable }}
+
+## {{ node_name | human_readable }}
+
+{{ description }}
+
+### Subscribed topics
+
+{% for name, msg_type in subscribers.items() -%}
+**/{{ namespace }}/{{ name }} ({{ msg_type }})**:
+{% endfor %}
+
+### Published topics
+
+{% for name, msg_type in publishers.items() -%}
+**/{{ namespace }}/{{ name }} ({{ msg_type }})**:
+{% endfor %}
+
+### Parameters
+
+**name (type, default: value)**:
