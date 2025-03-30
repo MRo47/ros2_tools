@@ -5,6 +5,10 @@ description = "Create ROS2 lifecycle package boilerplate from a minimal config f
 authors = ["Myron Rodrigues <rodriguesmyron47@gmail.com>"]
 license = "Apache-2.0"
 readme = "README.md"
+include = [
+    "templates/**",     # Include all Jinja2 template files
+    "package_files/**",      # Include all files within the package_files directory
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
