@@ -1,4 +1,4 @@
-name: Publish liefcycle_package_creator to PyPI
+name: Publish ros2_lifecycle_package_creator to PyPI
 
 on:
   release:
@@ -28,6 +28,6 @@ jobs:
 
       - name: Build and Publish
         run: |
-          cd ros2_tools/lifecycle_package_creator  # Change to your package directory
+          cd ros2_tools/ros2_lifecycle_package_creator
           poetry build
           poetry publish

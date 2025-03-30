@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "lifecycle-package-creator"
+name = "ros2-lifecycle-package-creator"
 version = "0.1.0"
 description = "Create ROS2 lifecycle package boilerplate from a minimal config file"
 authors = ["Myron Rodrigues <rodriguesmyron47@gmail.com>"]
@@ -17,4 +17,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-lifecycle-pkg-create = "lifecycle_package_creator.main:main"
+ros2-lifecycle-pkg-create = "ros2_lifecycle_package_creator.main:main"

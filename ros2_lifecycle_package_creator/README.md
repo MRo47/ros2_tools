@@ -17,7 +17,7 @@ eval $(poetry env activate)
 ```
 - now run
 ```bash
-lifecycle-pkg-create --help
+ros2-lifecycle-pkg-create --help
 ```
 
 ## Run locally without poetry
