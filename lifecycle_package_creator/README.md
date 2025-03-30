@@ -1,6 +1,6 @@
 # ROS2 lifecycle package creator
 
-Simplify lifecycle package creation in ROS2 by generating boilerplate files.
+Generate boilerplate source, CMakeLists.txt, launch, package.xml and readme files for ROS2 lifecycle nodes upto a minimum compilable package.
 
 This package works best with standard ROS2 messages and for custom interfaces follow the naming conventions like in ROS2 official packages.
 
@@ -28,7 +28,7 @@ pip install jinja2 pyyaml
 ```
 - run
 ```bash
-python src/main.py --config example/object_segmenter.yaml --target_dir example_pkg
+python src/main.py --config example/object_segmenter.yaml --target_dir /path/to/ros2_ws/src/example_pkg
 ```
 
 ## What this package generates
@@ -72,4 +72,5 @@ The package files will be put in `target_dir` ensure its empty or doesnt exist (
 - add license file
 - add license header
 - add parameter helpers
+- add actions and services
 
