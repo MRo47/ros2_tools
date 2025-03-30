@@ -12,4 +12,4 @@ Here is the [readme](ros2_dev_container/README.md).
 
 Generate boilerplate files for ROS2 lifecycle nodes upto a minimum compilable package.
 
-Here is the [readme](lifecycle_package_creator/README.md).
+Here is the [readme](ros2_lifecycle_package_creator/README.md).
