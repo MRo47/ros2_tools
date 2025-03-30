@@ -27,7 +27,7 @@ jobs:
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
 
       - name: Build and Publish
+        working-directory: ros2_lifecycle_package_creator  # Set the working directory
         run: |
-          cd ros2_tools/ros2_lifecycle_package_creator
           poetry build
           poetry publish
