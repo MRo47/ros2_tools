@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ros2-lifecycle-package-creator"
-version = "0.1.0"
+version = "0.1.2"
 description = "Create ROS2 lifecycle package boilerplate from a minimal config file"
 authors = ["Myron Rodrigues <rodriguesmyron47@gmail.com>"]
 license = "Apache-2.0"
