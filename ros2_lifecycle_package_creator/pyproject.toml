@@ -6,8 +6,8 @@ authors = ["Myron Rodrigues <rodriguesmyron47@gmail.com>"]
 license = "Apache-2.0"
 readme = "README.md"
 include = [
-    "templates/**",     # Include all Jinja2 template files
-    "package_files/**",      # Include all files within the package_files directory
+    { path = "ros2_lifecycle_package_creator/templates/*", format = ["sdist", "wheel"] },
+    { path = "ros2_lifecycle_package_creator/package_files/*", format = ["sdist", "wheel"] }
 ]
 
 [tool.poetry.dependencies]
