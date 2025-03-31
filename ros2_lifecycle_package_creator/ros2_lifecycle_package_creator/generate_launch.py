@@ -17,7 +17,7 @@ def generate_launch(template_dir: str, launch_template: str,
 if __name__ == "__main__":
     from pathlib import Path
 
-    template_dir = Path(__file__).resolve().parents[1]/"templates"
+    template_dir = Path(__file__).resolve().parent/"templates"
     launch_template = "node_launch.j2"
 
     print(generate_launch(template_dir, launch_template, "ObjectSegmenter",

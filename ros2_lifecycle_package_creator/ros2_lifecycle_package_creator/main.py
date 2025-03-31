@@ -19,10 +19,10 @@ def main():
         parser.print_help()
         parser.error("Both config_file and target_dir are required.")
 
-    top_level_dir = Path(__file__).resolve().parents[1]
-    template_dir = top_level_dir/"templates"
+    package_dir = Path(__file__).resolve().parent
+    template_dir = package_dir/"templates"
     generate_package(args.config_file, template_dir, args.target_dir)
-    package_files = top_level_dir/"package_files"
+    package_files = package_dir/"package_files"
     shutil.copy(package_files/".clang-format", args.target_dir)
     print(f"copied .clang-format to {args.target_dir}")
 

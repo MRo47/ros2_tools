@@ -23,7 +23,7 @@ def generate_readme(template_dir: str, readme_template: str, node_name: str,
 if __name__ == "__main__":
     from pathlib import Path
 
-    template_dir = Path(__file__).resolve().parents[1]/"templates"
+    template_dir = Path(__file__).resolve().parent/"templates"
     readme_template = "readme.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",

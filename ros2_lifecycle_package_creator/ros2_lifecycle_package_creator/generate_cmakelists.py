@@ -19,7 +19,7 @@ def generate_cmakelists(template_dir: str, cmakelists_template: str,
 if __name__ == "__main__":
     from pathlib import Path
 
-    template_dir = Path(__file__).resolve().parents[1]/"templates"
+    template_dir = Path(__file__).resolve().parent/"templates"
     cmakelists_template = "cmakelists.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",

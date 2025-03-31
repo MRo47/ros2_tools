@@ -22,7 +22,7 @@ def generate_package_xml(template_dir: str, package_xml_template: str,
 if __name__ == "__main__":
     from pathlib import Path
 
-    template_dir = Path(__file__).resolve().parents[1]/"templates"
+    template_dir = Path(__file__).resolve().parent/"templates"
     package_xml_template = "package_xml.j2"
     subscribers = {
         "roi": "sensor_msgs::msg::RegionOfInterest",
