@@ -1,8 +1,43 @@
 # ROS2 lifecycle package creator
 
-Generate boilerplate source, CMakeLists.txt, launch, package.xml and readme files for ROS2 lifecycle nodes upto a minimum compilable package.
+CLI tool to generate boilerplate source, CMakeLists.txt, launch, package.xml and readme files for ROS2 lifecycle nodes upto a minimum compilable package.
 
 This package works best with standard ROS2 messages and for custom interfaces follow the naming conventions like in ROS2 official packages.
+
+## Demo
+
+- running with the example [config](example/object_segmenter.yaml)
+```bash
+ros2-lifecycle-pkg-create --config_file example/object_segmenter.yaml --target_dir object_segmenter
+```
+- output directory
+```txt
+object_segmenter
+├── .clang-format
+├── CMakeLists.txt
+├── include
+│   └── object_segmenter
+│       └── object_segmenter.hpp
+├── launch
+│   └── object_segmenter.launch.py
+├── package.xml
+├── README.md
+└── src
+    ├── object_segmenter.cpp
+    └── object_segmenter_node.cpp
+```
+
+## Install using pip
+
+- from your python environment run
+```bash
+python -m pip install ros2-lifecycle-package-creator
+```
+- then run
+```bash
+ros2-lifecycle-pkg-create --help
+```
+
 
 ## Install and run locally using poetry
 

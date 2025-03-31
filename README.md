@@ -10,6 +10,6 @@ Here is the [readme](ros2_dev_container/README.md).
 
 ## ROS2 lifecycle package creator
 
-Generate boilerplate files for ROS2 lifecycle nodes upto a minimum compilable package.
+CLI tool to generate boilerplate files for ROS2 lifecycle nodes upto a minimum compilable package.
 
 Here is the [readme](ros2_lifecycle_package_creator/README.md).
